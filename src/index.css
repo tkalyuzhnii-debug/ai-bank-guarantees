@@ -87,6 +87,11 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --bank-gray: 51 51 51;
+    --bank-blue: 29 78 216;
+    --bank-green: 34 197 94;
+    --bank-light: 248 250 252;
   }
 }
 
@@ -98,4 +103,18 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Animation for currency ticker */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
 }
