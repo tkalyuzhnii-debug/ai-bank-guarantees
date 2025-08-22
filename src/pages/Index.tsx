@@ -268,7 +268,7 @@ Email для связи: garantiya25@mail.ru
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-bank-light to-white relative">
+    <div className="min-h-screen bg-gradient-to-b from-yellow-100 via-yellow-200 to-yellow-300 relative">
       {/* Robot Background */}
       <div 
         className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-5 pointer-events-none"
@@ -325,7 +325,7 @@ Email для связи: garantiya25@mail.ru
       </div>
       
       {/* Header */}
-      <header className="bg-white shadow-md border-b-2 border-bank-silver">
+      <header className="bg-white/90 backdrop-blur-sm shadow-md border-b-2 border-bank-silver">
         <div className="container mx-auto px-6 py-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -432,7 +432,7 @@ Email для связи: garantiya25@mail.ru
             <div className="w-24 h-1 bg-bank-blue mx-auto"></div>
           </div>
           
-          <Card className="shadow-xl border-2 border-bank-silver">
+          <Card className="shadow-xl border-2 border-bank-silver bg-white/95 backdrop-blur-sm">
             <CardHeader className="bg-gradient-to-r from-bank-navy to-bank-blue text-white">
               <CardTitle className="text-xl flex items-center gap-3 text-green-300">
                 <Icon name="Edit3" size={24} />
@@ -547,7 +547,7 @@ Email для связи: garantiya25@mail.ru
           
           <div className="grid md:grid-cols-2 gap-6">
             {requiredDocuments.map((doc, idx) => (
-              <Card key={doc.id} className="shadow-lg border-2 border-bank-silver hover:shadow-xl transition-all duration-300">
+              <Card key={doc.id} className="shadow-lg border-2 border-bank-silver hover:shadow-xl transition-all duration-300 bg-white/90 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
@@ -663,7 +663,7 @@ Email для связи: garantiya25@mail.ru
             <div className="w-24 h-1 bg-bank-blue mx-auto"></div>
           </div>
           
-          <Card className="shadow-2xl border-2 border-bank-silver bg-gradient-to-br from-white to-bank-light">
+          <Card className="shadow-2xl border-2 border-bank-silver bg-gradient-to-br from-white/95 to-bank-light/90 backdrop-blur-sm">
             <CardContent className="p-12">
               <div className="text-center space-y-8">
                 <div className="flex items-center justify-center">
@@ -694,17 +694,17 @@ Email для связи: garantiya25@mail.ru
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-6 mt-8">
-                  <div className="text-center p-4 bg-white rounded-lg border border-bank-silver shadow-md">
+                  <div className="text-center p-4 bg-white/90 backdrop-blur-sm rounded-lg border border-bank-silver shadow-md">
                     <Icon name="Clock" size={24} className="mx-auto mb-2 text-bank-blue" />
                     <div className="text-sm font-semibold text-bank-navy">Работаем</div>
                     <div className="text-sm text-bank-slate">24/7</div>
                   </div>
-                  <div className="text-center p-4 bg-white rounded-lg border border-bank-silver shadow-md">
+                  <div className="text-center p-4 bg-white/90 backdrop-blur-sm rounded-lg border border-bank-silver shadow-md">
                     <Icon name="Zap" size={24} className="mx-auto mb-2 text-bank-blue" />
                     <div className="text-sm font-semibold text-bank-navy">Быстрый ответ</div>
                     <div className="text-sm text-bank-slate">В течение часа</div>
                   </div>
-                  <div className="text-center p-4 bg-white rounded-lg border border-bank-silver shadow-md">
+                  <div className="text-center p-4 bg-white/90 backdrop-blur-sm rounded-lg border border-bank-silver shadow-md">
                     <Icon name="Shield" size={24} className="mx-auto mb-2 text-bank-blue" />
                     <div className="text-sm font-semibold text-bank-navy">Надежность</div>
                     <div className="text-sm text-bank-slate">Официальные партнеры</div>
