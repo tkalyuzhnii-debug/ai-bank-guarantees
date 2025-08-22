@@ -83,42 +83,71 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-bank-light to-white">
+    <div className="min-h-screen bg-gradient-to-b from-bank-light to-white">
       {/* Currency Ticker */}
-      <div className="bg-bank-gray text-white py-2 overflow-hidden">
-        <div className="animate-marquee whitespace-nowrap flex space-x-8">
-          <span>USD: {currencyRates.usd} ₽</span>
-          <span>EUR: {currencyRates.eur} ₽</span>
-          <span>CNY: {currencyRates.cny} ₽</span>
-          <span>USD: {currencyRates.usd} ₽</span>
-          <span>EUR: {currencyRates.eur} ₽</span>
-          <span>CNY: {currencyRates.cny} ₽</span>
+      <div className="bg-bank-navy text-white py-2.5 border-b border-bank-silver">
+        <div className="animate-marquee whitespace-nowrap flex space-x-12 text-sm font-medium">
+          <span className="flex items-center gap-2">
+            <Icon name="TrendingUp" size={14} />
+            USD: {currencyRates.usd} ₽
+          </span>
+          <span className="flex items-center gap-2">
+            <Icon name="TrendingUp" size={14} />
+            EUR: {currencyRates.eur} ₽
+          </span>
+          <span className="flex items-center gap-2">
+            <Icon name="TrendingUp" size={14} />
+            CNY: {currencyRates.cny} ₽
+          </span>
+          <span className="flex items-center gap-2">
+            <Icon name="TrendingUp" size={14} />
+            USD: {currencyRates.usd} ₽
+          </span>
+          <span className="flex items-center gap-2">
+            <Icon name="TrendingUp" size={14} />
+            EUR: {currencyRates.eur} ₽
+          </span>
+          <span className="flex items-center gap-2">
+            <Icon name="TrendingUp" size={14} />
+            CNY: {currencyRates.cny} ₽
+          </span>
         </div>
       </div>
       
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-4 py-6">
+      <header className="bg-white shadow-md border-b-2 border-bank-silver">
+        <div className="container mx-auto px-6 py-8">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Icon name="Building2" size={32} className="text-bank-blue" />
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-bank-navy rounded-lg">
+                <Icon name="Building2" size={36} className="text-white" />
+              </div>
               <div>
-                <h1 className="text-2xl font-bold text-bank-gray">Банковские Гарантии РУ</h1>
-                <p className="text-sm text-muted-foreground">Партнеры ведущих российских банков</p>
+                <h1 className="text-3xl font-bold text-bank-navy tracking-tight">
+                  Банковские Гарантии РУ
+                </h1>
+                <p className="text-bank-slate font-medium">Партнеры ведущих российских банков</p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="text-sm space-y-1">
-                <div className="flex items-center gap-2">
-                  <Icon name="Clock" size={16} className="text-bank-blue" />
-                  <span>Москва: {moscowTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Icon name="Clock" size={16} className="text-bank-green" />
-                  <span>Владивосток: {vladTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</span>
+            <div className="flex items-center gap-6">
+              <div className="bg-bank-light p-4 rounded-lg border border-bank-silver">
+                <div className="text-sm space-y-2">
+                  <div className="flex items-center gap-3">
+                    <Icon name="Clock" size={16} className="text-bank-navy" />
+                    <span className="text-bank-navy font-medium">
+                      МСК: {moscowTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Icon name="Clock" size={16} className="text-bank-slate" />
+                    <span className="text-bank-slate font-medium">
+                      ВЛД: {vladTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
                 </div>
               </div>
-              <Badge variant="outline" className="text-bank-green border-bank-green">
+              <Badge variant="outline" className="text-bank-green border-bank-green px-4 py-2 text-sm font-semibold">
+                <Icon name="Circle" size={8} className="text-bank-green mr-2" />
                 Онлайн 24/7
               </Badge>
             </div>
@@ -126,154 +155,205 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-6 py-12">
         {/* Guarantee Type Selection */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-bank-gray mb-2">Выберите тип гарантии</h2>
-
+        <div className="max-w-5xl mx-auto mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-bank-navy mb-4 tracking-tight">
+              Выберите тип гарантии
+            </h2>
+            <div className="w-24 h-1 bg-bank-blue mx-auto"></div>
           </div>
           
-          <Card className="p-6">
-            <div className="space-y-6">
-              <div>
-                <Label htmlFor="guarantee-type" className="text-lg font-medium">Тип гарантии</Label>
-                <Select value={selectedGuaranteeType} onValueChange={setSelectedGuaranteeType}>
-                  <SelectTrigger className="mt-2">
-                    <SelectValue placeholder="Выберите тип банковской гарантии" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {guaranteeTypes.map((type) => (
-                      <SelectItem key={type.value} value={type.value}>
-                        <div className="flex flex-col">
-                          <span className="font-medium">{type.label}</span>
-                          <span className="text-sm text-muted-foreground">{type.range}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {selectedGuaranteeType && (
-                <div className="grid md:grid-cols-2 gap-6 pt-6 border-t">
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="federal-law">По какому ФЗ</Label>
-                      <Input 
-                        id="federal-law"
-                        placeholder="Например: ФЗ №44, ФЗ №223"
-                        value={federalLaw}
-                        onChange={(e) => setFederalLaw(e.target.value)}
-                        className="mt-1"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="tender-link">Ссылка на тендер</Label>
-                      <Input 
-                        id="tender-link"
-                        placeholder="https://zakupki.gov.ru/..."
-                        value={tenderLink}
-                        onChange={(e) => setTenderLink(e.target.value)}
-                        className="mt-1"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="guarantee-amount">Сумма гарантии</Label>
-                      <Input 
-                        id="guarantee-amount"
-                        placeholder="Например: 1 000 000 ₽"
-                        value={guaranteeAmount}
-                        onChange={(e) => setGuaranteeAmount(e.target.value)}
-                        className="mt-1"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="guarantee-period">Срок гарантии</Label>
-                      <Input 
-                        id="guarantee-period"
-                        placeholder="Например: 12 месяцев"
-                        value={guaranteePeriod}
-                        onChange={(e) => setGuaranteePeriod(e.target.value)}
-                        className="mt-1"
-                      />
-                    </div>
-                  </div>
+          <Card className="shadow-xl border-2 border-bank-silver">
+            <CardHeader className="bg-gradient-to-r from-bank-navy to-bank-blue text-white">
+              <CardTitle className="text-xl flex items-center gap-3">
+                <Icon name="FileText" size={24} />
+                Параметры банковской гарантии
+              </CardTitle>
+              <CardDescription className="text-bank-light">
+                Заполните основную информацию для подбора оптимального предложения
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-8">
+              <div className="space-y-8">
+                <div>
+                  <Label htmlFor="guarantee-type" className="text-lg font-semibold text-bank-navy">
+                    Тип гарантии
+                  </Label>
+                  <Select value={selectedGuaranteeType} onValueChange={setSelectedGuaranteeType}>
+                    <SelectTrigger className="mt-3 h-12 text-base border-2 border-bank-silver focus:border-bank-blue">
+                      <SelectValue placeholder="Выберите тип банковской гарантии" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {guaranteeTypes.map((type) => (
+                        <SelectItem key={type.value} value={type.value} className="py-3">
+                          <div className="flex flex-col">
+                            <span className="font-semibold text-bank-navy">{type.label}</span>
+                            <span className="text-sm text-bank-slate">{type.range}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-              )}
-            </div>
+
+                {selectedGuaranteeType && (
+                  <div className="grid md:grid-cols-2 gap-8 pt-8 border-t-2 border-bank-silver">
+                    <div className="space-y-6">
+                      <div>
+                        <Label htmlFor="federal-law" className="text-base font-semibold text-bank-navy">
+                          По какому ФЗ
+                        </Label>
+                        <Input 
+                          id="federal-law"
+                          placeholder="Например: ФЗ №44, ФЗ №223"
+                          value={federalLaw}
+                          onChange={(e) => setFederalLaw(e.target.value)}
+                          className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="tender-link" className="text-base font-semibold text-bank-navy">
+                          Ссылка на тендер
+                        </Label>
+                        <Input 
+                          id="tender-link"
+                          placeholder="https://zakupki.gov.ru/..."
+                          value={tenderLink}
+                          onChange={(e) => setTenderLink(e.target.value)}
+                          className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-6">
+                      <div>
+                        <Label htmlFor="guarantee-amount" className="text-base font-semibold text-bank-navy">
+                          Сумма гарантии
+                        </Label>
+                        <Input 
+                          id="guarantee-amount"
+                          placeholder="Например: 1 000 000 ₽"
+                          value={guaranteeAmount}
+                          onChange={(e) => setGuaranteeAmount(e.target.value)}
+                          className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="guarantee-period" className="text-base font-semibold text-bank-navy">
+                          Срок гарантии
+                        </Label>
+                        <Input 
+                          id="guarantee-period"
+                          placeholder="Например: 12 месяцев"
+                          value={guaranteePeriod}
+                          onChange={(e) => setGuaranteePeriod(e.target.value)}
+                          className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </CardContent>
           </Card>
         </div>
 
         {/* Documents Upload Section */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <h2 className="text-2xl font-bold text-bank-gray mb-6 text-center">
-            Перечень необходимых документов
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4">
+        <div className="max-w-5xl mx-auto mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-bank-navy mb-4 tracking-tight">
+              Перечень необходимых документов
+            </h2>
+            <div className="w-24 h-1 bg-bank-blue mx-auto"></div>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6">
             {requiredDocuments.map((doc, idx) => (
-              <Card key={doc.id} className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="text-sm font-medium text-bank-gray">
-                      {idx + 1}. {doc.name}
+              <Card key={doc.id} className="shadow-lg border-2 border-bank-silver hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-8 h-8 bg-bank-navy text-white rounded-full flex items-center justify-center text-sm font-bold">
+                          {idx + 1}
+                        </div>
+                        <div className="text-base font-semibold text-bank-navy">
+                          {doc.name}
+                        </div>
+                      </div>
+                      <div className="text-sm text-bank-slate ml-11">
+                        {uploadedFiles[doc.id]?.length > 0 
+                          ? (
+                            <div className="flex items-center gap-2 text-bank-green">
+                              <Icon name="CheckCircle" size={16} />
+                              Загружено файлов: {uploadedFiles[doc.id].length}
+                            </div>
+                          )
+                          : (
+                            <div className="flex items-center gap-2 text-bank-slate">
+                              <Icon name="Upload" size={16} />
+                              Файл не загружен
+                            </div>
+                          )
+                        }
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      {uploadedFiles[doc.id]?.length > 0 
-                        ? `Загружено файлов: ${uploadedFiles[doc.id].length}`
-                        : 'Файл не загружен'
-                      }
+                    <div className="ml-4">
+                      <input 
+                        type="file" 
+                        multiple 
+                        className="hidden" 
+                        id={`upload-doc-${doc.id}`}
+                        onChange={(e) => handleFileUpload(doc.id, e.target.files)}
+                      />
+                      <Button 
+                        variant="outline"
+                        size="sm"
+                        className="border-2 border-bank-navy text-bank-navy hover:bg-bank-navy hover:text-white transition-all duration-300"
+                        onClick={() => document.getElementById(`upload-doc-${doc.id}`)?.click()}
+                      >
+                        <Icon name="Paperclip" size={16} className="mr-2" />
+                        Загрузить
+                      </Button>
                     </div>
                   </div>
-                  <div className="ml-4">
-                    <input 
-                      type="file" 
-                      multiple 
-                      className="hidden" 
-                      id={`upload-doc-${doc.id}`}
-                      onChange={(e) => handleFileUpload(doc.id, e.target.files)}
-                    />
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => document.getElementById(`upload-doc-${doc.id}`)?.click()}
-                    >
-                      <Icon name="Paperclip" size={16} />
-                    </Button>
-                  </div>
-                </div>
+                </CardContent>
               </Card>
             ))}
           </div>
         </div>
 
         {/* Final Submit Button */}
-        <div className="text-center mb-12">
-          <Button size="lg" className="bg-gradient-to-r from-bank-blue to-bank-green hover:opacity-90 text-lg px-12 py-3">
-            <Icon name="Send" size={20} className="mr-3" />
+        <div className="text-center mb-16">
+          <Button 
+            size="lg" 
+            className="bg-gradient-to-r from-bank-navy to-bank-blue hover:from-bank-blue hover:to-bank-navy text-white font-semibold text-lg px-16 py-4 shadow-xl hover:shadow-2xl transition-all duration-300"
+          >
+            <Icon name="Send" size={24} className="mr-4" />
             Подать заявку на банковскую гарантию
           </Button>
         </div>
 
         {/* Stats Section */}
-        <div className="grid md:grid-cols-4 gap-6 text-center">
-          {[
-            { icon: 'Building2', label: 'Банков-партнеров', value: '30+' },
-            { icon: 'FileText', label: 'Выданных гарантий', value: '5000+' },
-            { icon: 'Clock', label: 'Среднее время', value: '24ч' },
-            { icon: 'Shield', label: 'Успешных сделок', value: '98%' }
-          ].map((stat, idx) => (
-            <Card key={idx} className="p-6">
-              <Icon name={stat.icon as any} size={32} className="text-bank-blue mx-auto mb-3" />
-              <div className="text-2xl font-bold text-bank-gray mb-1">{stat.value}</div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
-            </Card>
-          ))}
+        <div className="bg-gradient-to-r from-bank-navy to-bank-blue p-12 rounded-2xl shadow-2xl">
+          <div className="grid md:grid-cols-4 gap-8 text-center">
+            {[
+              { icon: 'Building2', label: 'Банков-партнеров', value: '30+', color: 'text-white' },
+              { icon: 'FileText', label: 'Выданных гарантий', value: '5000+', color: 'text-white' },
+              { icon: 'Clock', label: 'Среднее время', value: '24ч', color: 'text-white' },
+              { icon: 'Shield', label: 'Успешных сделок', value: '98%', color: 'text-white' }
+            ].map((stat, idx) => (
+              <div key={idx} className="text-white">
+                <Icon name={stat.icon as any} size={40} className="mx-auto mb-4 opacity-90" />
+                <div className="text-3xl font-bold mb-2">{stat.value}</div>
+                <div className="text-sm opacity-90 uppercase tracking-wider">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     </div>

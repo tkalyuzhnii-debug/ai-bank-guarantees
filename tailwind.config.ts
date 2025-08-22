@@ -63,10 +63,13 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				bank: {
-					blue: '#0066CC',
-					gray: '#1A365D',
-					green: '#10B981',
-					light: '#F7FAFC'
+					blue: '#1E3A8A',
+					gray: '#1F2937',
+					green: '#059669',
+					light: '#F8FAFC',
+					navy: '#0F172A',
+					slate: '#475569',
+					silver: '#E2E8F0'
 				}
 			},
 			borderRadius: {
