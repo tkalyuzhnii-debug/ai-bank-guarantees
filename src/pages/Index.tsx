@@ -268,7 +268,12 @@ Email для связи: garantiya25@mail.ru
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-bank-light to-white">
+    <div className="min-h-screen bg-gradient-to-b from-bank-light to-white relative">
+      {/* Robot Background */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-5 pointer-events-none"
+        style={{ backgroundImage: 'url(/img/86319c3d-a117-457a-b30d-0c5a73a26cb0.jpg)' }}
+      ></div>
       {/* Currency Ticker */}
       <div className="bg-bank-navy text-white py-2.5 border-b border-bank-silver">
         <div className="animate-marquee whitespace-nowrap flex space-x-12 text-sm font-medium">
@@ -363,31 +368,52 @@ Email для связи: garantiya25@mail.ru
       <main className="container mx-auto px-6 py-12">
         {/* Info Banner */}
         <div className="max-w-6xl mx-auto mb-16">
-          <Card className="bg-gradient-to-r from-bank-navy to-bank-blue text-white shadow-2xl border-0">
-            <CardContent className="p-8">
-              <div className="text-center space-y-6">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <Icon name="Award" size={32} className="text-white" />
-                  <h2 className="text-2xl font-bold text-green-400">
-                    Мы официальные партнеры многих банков России!
-                  </h2>
+          <Card className="bg-gradient-to-r from-bank-navy to-bank-blue text-white shadow-2xl border-0 relative overflow-hidden">
+            <CardContent className="p-8 relative z-10">
+              <div className="grid lg:grid-cols-2 gap-8 items-center">
+                {/* Left side - Text content */}
+                <div className="text-center lg:text-left space-y-6">
+                  <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
+                    <Icon name="Award" size={32} className="text-white" />
+                    <h2 className="text-2xl font-bold text-green-400">
+                      Мы официальные партнеры многих банков России!
+                    </h2>
+                  </div>
+                  
+                  <div className="space-y-4 text-lg leading-relaxed">
+                    <p>
+                      Сайт создан в целях автоматизации выпуска банковской гарантии, для того чтобы уйти от телефонных переговоров, а сразу же приступить к оформлению банковской гарантии.
+                    </p>
+                    <p>
+                      Для этого вам нужно лишь один раз подать заявку и получить уже готовое решение от банков!
+                    </p>
+                    <div className="bg-white/10 p-4 rounded-lg mt-6">
+                      <div className="flex items-start gap-3">
+                        <Icon name="Mail" size={24} className="text-white mt-1 flex-shrink-0" />
+                        <div>
+                          <p className="font-semibold mb-2">Процесс работы:</p>
+                          <p className="text-sm">
+                            Все ссылки на подписания будут приходить к вам на почту. В случае дополнительных документов наш менеджер с вами свяжется по почте или в удобном для вас мессенджере.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="max-w-4xl mx-auto space-y-4 text-lg leading-relaxed">
-                  <p>
-                    Сайт создан в целях автоматизации выпуска банковской гарантии, для того чтобы уйти от телефонных переговоров, а сразу же приступить к оформлению банковской гарантии.
-                  </p>
-                  <p>
-                    Для этого вам нужно лишь один раз подать заявку и получить уже готовое решение от банков!
-                  </p>
-                  <div className="bg-white/10 p-4 rounded-lg mt-6">
-                    <div className="flex items-start gap-3">
-                      <Icon name="Mail" size={24} className="text-white mt-1 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold mb-2">Процесс работы:</p>
-                        <p className="text-sm">
-                          Все ссылки на подписания будут приходить к вам на почту. В случае дополнительных документов наш менеджер с вами свяжется по почте или в удобном для вас мессенджере.
-                        </p>
+                {/* Right side - Robot Image */}
+                <div className="flex items-center justify-center lg:justify-end">
+                  <div className="relative">
+                    <div className="w-80 h-80 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center p-8">
+                      <img 
+                        src="/img/86319c3d-a117-457a-b30d-0c5a73a26cb0.jpg" 
+                        alt="AI Robot Assistant" 
+                        className="w-full h-full object-cover rounded-full shadow-2xl"
+                      />
+                    </div>
+                    <div className="absolute -top-2 -right-2">
+                      <div className="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
+                        <Icon name="Zap" size={24} className="text-white" />
                       </div>
                     </div>
                   </div>
