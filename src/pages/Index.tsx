@@ -32,6 +32,29 @@ const Index = () => {
     { bank: 'Райффайзенбанк', rate: '1.6%' }
   ]);
   
+  const [allBankRates] = useState([
+    { bank: 'Сбербанк', rate: '1.5%' },
+    { bank: 'ВТБ', rate: '1.7%' },
+    { bank: 'Газпромбанк', rate: '1.8%' },
+    { bank: 'Альфа-Банк', rate: '2.0%' },
+    { bank: 'Россельхозбанк', rate: '1.9%' },
+    { bank: 'Открытие', rate: '2.1%' },
+    { bank: 'Промсвязьбанк', rate: '2.2%' },
+    { bank: 'МКБ', rate: '2.0%' },
+    { bank: 'Росбанк', rate: '1.8%' },
+    { bank: 'Райффайзенбанк', rate: '1.6%' },
+    { bank: 'Тинькофф Банк', rate: '1.9%' },
+    { bank: 'УБРиР', rate: '2.3%' },
+    { bank: 'АК БАРС', rate: '2.1%' },
+    { bank: 'Банк Зенит', rate: '2.4%' },
+    { bank: 'Совкомбанк', rate: '2.0%' },
+    { bank: 'Ситибанк', rate: '1.8%' },
+    { bank: 'Банк Санкт-Петербург', rate: '2.2%' },
+    { bank: 'Транскапиталбанк', rate: '2.5%' },
+    { bank: 'Росгосстрах Банк', rate: '2.3%' },
+    { bank: 'Банк Уралсиб', rate: '2.4%' }
+  ]);
+  
   const [selectedGuaranteeType, setSelectedGuaranteeType] = useState('');
   const [federalLaw, setFederalLaw] = useState('');
   const [tenderLink, setTenderLink] = useState('');
@@ -223,6 +246,24 @@ Email для связи: garantiya25@mail.ru
           {bankRates.map((bank, idx) => (
             <span key={idx} className="flex items-center gap-2">
               <Icon name="Building2" size={14} />
+              {bank.bank}: от {bank.rate}
+            </span>
+          ))}
+        </div>
+      </div>
+      
+      {/* Bank Rates Ticker - Reverse Direction */}
+      <div className="bg-gradient-to-r from-bank-blue to-bank-navy text-white py-2.5 border-b border-bank-silver">
+        <div className="animate-marquee-reverse whitespace-nowrap flex space-x-12 text-sm font-medium">
+          {allBankRates.map((bank, idx) => (
+            <span key={idx} className="flex items-center gap-2">
+              <Icon name="TrendingDown" size={14} />
+              {bank.bank}: от {bank.rate}
+            </span>
+          ))}
+          {allBankRates.map((bank, idx) => (
+            <span key={`repeat-${idx}`} className="flex items-center gap-2">
+              <Icon name="TrendingDown" size={14} />
               {bank.bank}: от {bank.rate}
             </span>
           ))}
