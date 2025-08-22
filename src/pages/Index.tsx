@@ -100,17 +100,25 @@ const Index = () => {
     setIsSubmitting(true);
     
     try {
-      const formData = new FormData();
-      
-      // Добавляем данные гарантии
-      formData.append('tenderLink', tenderLink);
-      formData.append('guaranteeAmount', guaranteeAmount);
-      formData.append('federalLaw', federalLaw);
-      formData.append('guaranteeType', selectedGuaranteeType);
-      formData.append('guaranteePeriod', guaranteePeriod);
-      formData.append('accessKey', accessKey);
-      
-      // Добавляем информацию о загруженных документах
+      // Собираем данные банковской гарантии
+      const guaranteeData = {
+        tenderLink,
+        guaranteeAmount,
+        federalLaw,
+        guaranteeType: selectedGuaranteeType,
+        guaranteePeriod,
+        timestamp: new Date().toLocaleString('ru-RU', { 
+          timeZone: 'Europe/Moscow',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        })
+      };
+
+      // Информация о документах
       const documentsInfo = requiredDocuments.map(doc => {
         const files = uploadedFiles[doc.id] || [];
         return {
@@ -119,25 +127,42 @@ const Index = () => {
           fileNames: files.map(f => f.name)
         };
       });
-      formData.append('documentsInfo', JSON.stringify(documentsInfo));
       
-      // Добавляем файлы документов
-      Object.entries(uploadedFiles).forEach(([docId, files]) => {
-        files.forEach((file, index) => {
-          formData.append(`document_${docId}_${index}`, file);
-        });
-      });
+      // Формируем текст заявки
+      const emailContent = `
+=== ЗАЯВКА НА БАНКОВСКУЮ ГАРАНТИЮ ===
+Дата и время подачи: ${guaranteeData.timestamp}
+
+ДАННЫЕ ГАРАНТИИ:
+• Ссылка на тендер: ${guaranteeData.tenderLink}
+• Сумма гарантии: ${guaranteeData.guaranteeAmount}
+• Федеральный закон: ${guaranteeData.federalLaw}
+• Тип гарантии: ${guaranteeData.guaranteeType}
+• Срок гарантии: ${guaranteeData.guaranteePeriod}
+
+ПЕРЕЧЕНЬ НЕОБХОДИМЫХ ДОКУМЕНТОВ:
+${documentsInfo.map(doc => 
+  `• ${doc.name}: ${doc.filesCount > 0 ? `${doc.filesCount} файл(ов) - ${doc.fileNames.join(', ')}` : 'Не загружено'}`
+).join('\n')}
+
+---
+Заявка подана через poehali.dev
+Email для связи: garantiya25@mail.ru
+`;
+
+      // Создаем mailto ссылку для отправки
+      const subject = encodeURIComponent('Заявка на банковскую гарантию');
+      const body = encodeURIComponent(emailContent);
+      const mailtoLink = `mailto:garantiya25@mail.ru?subject=${subject}&body=${body}`;
       
-      // Отправляем заявку
-      const response = await fetch('/api/submit-guarantee', {
-        method: 'POST',
-        body: formData
-      });
+      // Открываем почтовый клиент
+      window.location.href = mailtoLink;
       
-      if (response.ok) {
-        alert('✅ Заявка успешно отправлена на garantiya25@mail.ru!\n\nВ заявке содержатся:\n• Данные банковской гарантии\n• Загруженные документы\n• Контактная информация');
+      // Показываем успешное сообщение
+      setTimeout(() => {
+        alert('✅ Заявка подготовлена для отправки!\n\nОткрылся ваш почтовый клиент для отправки на garantiya25@mail.ru\n\nВ заявке содержатся:\n• Данные банковской гарантии\n• Информация о загруженных документах\n• Контактная информация');
         
-        // Очищаем форму после успешной отправки
+        // Очищаем форму после подготовки к отправке
         setTenderLink('');
         setGuaranteeAmount('');
         setFederalLaw('');
@@ -145,13 +170,11 @@ const Index = () => {
         setGuaranteePeriod('');
         setAccessKey('');
         setUploadedFiles({});
-      } else {
-        const errorData = await response.json();
-        alert(`❌ Ошибка при отправке заявки: ${errorData.message || 'Неизвестная ошибка'}`);
-      }
+      }, 1000);
+      
     } catch (error) {
-      console.error('Ошибка отправки:', error);
-      alert('❌ Ошибка при отправке заявки. Проверьте интернет-соединение и попробуйте снова.');
+      console.error('Ошибка подготовки заявки:', error);
+      alert('❌ Ошибка при подготовке заявки. Попробуйте снова.');
     } finally {
       setIsSubmitting(false);
     }
@@ -466,8 +489,18 @@ const Index = () => {
             )}
           </Button>
           <p className="text-sm text-bank-slate mt-4">
-            Заявка будет отправлена на garantiya25@mail.ru
+            📧 Заявка будет отправлена на <strong>garantiya25@mail.ru</strong>
           </p>
+          {accessKey && accessKey !== 'ba42c3d9-0cfe-43b4-816a-cbe491f04fca' && (
+            <p className="text-sm text-red-600 mt-2">
+              ❌ Неверный ключ доступа
+            </p>
+          )}
+          {accessKey === 'ba42c3d9-0cfe-43b4-816a-cbe491f04fca' && (
+            <p className="text-sm text-green-600 mt-2">
+              ✅ Ключ доступа действителен
+            </p>
+          )}
         </div>
 
         {/* Stats Section */}
