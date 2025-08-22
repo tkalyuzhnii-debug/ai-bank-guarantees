@@ -4,13 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
-  const [chatMessages, setChatMessages] = useState([
-    { role: 'assistant', content: 'Добро пожаловать! Я помогу вам с банковскими гарантиями. Какую сумму вы рассматриваете?' }
-  ]);
-  const [currentMessage, setCurrentMessage] = useState('');
   const [moscowTime, setMoscowTime] = useState(new Date());
   const [vladTime, setVladTime] = useState(new Date());
   const [currencyRates] = useState({
@@ -18,6 +16,12 @@ const Index = () => {
     eur: 95.67,
     cny: 12.34
   });
+  
+  const [selectedGuaranteeType, setSelectedGuaranteeType] = useState('');
+  const [federalLaw, setFederalLaw] = useState('');
+  const [tenderLink, setTenderLink] = useState('');
+  const [guaranteeAmount, setGuaranteeAmount] = useState('');
+  const [guaranteePeriod, setGuaranteePeriod] = useState('');
 
   const requiredDocuments = [
     { id: 'tender', name: 'Реестровый № торгов/ссылка на закупку' },
@@ -30,12 +34,7 @@ const Index = () => {
     { id: 'director', name: 'Приказ + решение о назначении ген. директора' }
   ];
 
-  const [uploadedFiles, setUploadedFiles] = useState<{[key: string]: {[docId: string]: File[]}}>(
-    requiredDocuments.reduce((acc, doc) => {
-      acc[doc.id] = {};
-      return acc;
-    }, {} as {[key: string]: {[docId: string]: File[]}})
-  );
+  const [uploadedFiles, setUploadedFiles] = useState<{[key: string]: File[]}>({});
   
   useEffect(() => {
     const timer = setInterval(() => {
@@ -48,83 +47,37 @@ const Index = () => {
 
   const guaranteeTypes = [
     {
-      id: 'commercial',
-      title: 'Коммерческая гарантия',
+      value: 'commercial',
+      label: 'Коммерческая гарантия',
       range: '1 000 - 1 000 000 ₽',
-      description: 'Для небольших коммерческих сделок',
-      features: ['Быстрое оформление', 'Минимум документов', 'Решение в день обращения'],
-      color: 'bg-emerald-500',
-      icon: 'HandCoins',
-      fzInfo: 'ФЗ №44, ФЗ №223',
-      tenderLink: 'https://zakupki.gov.ru',
-      duration: '1-12 месяцев',
-      amount: '1 000 - 1 000 000 ₽'
+      description: 'For small commercial deals',
     },
     {
-      id: 'express',
-      title: 'Экспресс-гарантии',
+      value: 'express',
+      label: 'Экспресс-гарантии',
       range: '1 000 - 5 000 000 ₽',
-      description: 'Быстрое оформление за 1-2 дня',
-      features: ['Минимальный пакет документов', 'Онлайн оформление', 'Решение за 24 часа'],
-      color: 'bg-bank-green',
-      icon: 'Zap',
-      fzInfo: 'ФЗ №44, ФЗ №223',
-      tenderLink: 'https://zakupki.gov.ru',
-      duration: '3-24 месяца',
-      amount: '1 000 - 5 000 000 ₽'
+      description: 'Fast processing within 1-2 days',
     },
     {
-      id: 'standard', 
-      title: 'Стандартные гарантии',
+      value: 'standard',
+      label: 'Стандартные гарантии',
       range: '5 000 000 - 100 000 000 ₽',
-      description: 'Оптимальные условия для большинства сделок',
-      features: ['Гибкие условия', '30 банков-партнеров', 'Персональный менеджер'],
-      color: 'bg-bank-blue',
-      icon: 'Building2',
-      fzInfo: 'ФЗ №44, ФЗ №223, ФЗ №615',
-      tenderLink: 'https://zakupki.gov.ru',
-      duration: '6-36 месяцев',
-      amount: '5 000 000 - 100 000 000 ₽'
+      description: 'Optimal conditions for most deals',
     },
     {
-      id: 'large',
-      title: 'Крупные гарантии', 
+      value: 'large',
+      label: 'Крупные гарантии',
       range: 'от 100 000 000 ₽',
-      description: 'Для масштабных проектов и госконтрактов',
-      features: ['Индивидуальный подход', 'Консорциумы банков', 'VIP обслуживание'],
-      color: 'bg-gradient-to-r from-bank-blue to-bank-green',
-      icon: 'Crown',
-      fzInfo: 'ФЗ №44, ФЗ №223, ФЗ №615',
-      tenderLink: 'https://zakupki.gov.ru',
-      duration: '12-60 месяцев',
-      amount: 'от 100 000 000 ₽'
+      description: 'For large-scale projects and government contracts',
     }
   ];
-
-  const handleSendMessage = () => {
-    if (!currentMessage.trim()) return;
-    
-    const newMessages = [
-      ...chatMessages,
-      { role: 'user', content: currentMessage },
-      { 
-        role: 'assistant', 
-        content: 'Понимаю ваш вопрос. Для подбора оптимального банка и условий мне нужно больше информации о вашем проекте. Какой тип гарантии вам нужен?'
-      }
-    ];
-    setChatMessages(newMessages);
-    setCurrentMessage('');
-  };
 
   const handleFileUpload = (docId: string, files: FileList | null) => {
     if (files) {
       const newFiles = Array.from(files);
       setUploadedFiles(prev => ({
         ...prev,
-        [docId]: {
-          ...prev[docId],
-          files: [...(prev[docId]?.files || []), ...newFiles]
-        }
+        [docId]: [...(prev[docId] || []), ...newFiles]
       }));
     }
   };
@@ -151,7 +104,7 @@ const Index = () => {
               <Icon name="Building2" size={32} className="text-bank-blue" />
               <div>
                 <h1 className="text-2xl font-bold text-bank-gray">Банковские Гарантии РУ</h1>
-                <p className="text-sm text-muted-foreground">30 банков • ИИ-консультант • Быстрое оформление</p>
+                <p className="text-sm text-muted-foreground">Партнеры ведущих российских банков</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -174,131 +127,91 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Guarantee Cards */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-bank-gray mb-2">Выберите тип гарантии</h2>
-              <p className="text-muted-foreground">Работаем с 30 ведущими банками России</p>
-            </div>
-
-            <div className="grid md:grid-cols-1 gap-6">
-              {guaranteeTypes.map((type) => (
-                <Card key={type.id} className="hover:shadow-lg transition-shadow border-2 hover:border-primary/20">
-                  <CardHeader className="pb-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`p-3 rounded-lg ${type.color}`}>
-                          <Icon name={type.icon as any} size={24} className="text-white" />
-                        </div>
-                        <div>
-                          <CardTitle className="text-xl text-bank-gray">{type.title}</CardTitle>
-                          <CardDescription className="text-bank-blue font-semibold text-lg">
-                            {type.range}
-                          </CardDescription>
-                        </div>
-                      </div>
-                      <Badge variant="secondary">{type.description}</Badge>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="space-y-4">
-                    <ul className="space-y-2">
-                      {type.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-sm">
-                          <Icon name="Check" size={16} className="text-bank-green" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Guarantee Info Block */}
-                    <div className="bg-muted p-4 rounded-lg space-y-3">
-                      <h4 className="font-semibold text-bank-gray">Описание гарантии</h4>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <span className="text-muted-foreground">По ФЗ:</span>
-                          <div className="font-medium">{type.fzInfo}</div>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Ссылка на тендер:</span>
-                          <a href={type.tenderLink} target="_blank" className="text-bank-blue hover:underline block">
-                            zakupki.gov.ru
-                          </a>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Срок гарантии:</span>
-                          <div className="font-medium">{type.duration}</div>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Сумма гарантии:</span>
-                          <div className="font-medium">{type.amount}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Button className="w-full bg-bank-blue hover:bg-bank-blue/90">
-                      Подать заявку
-                      <Icon name="ArrowRight" size={16} className="ml-2" />
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+        {/* Guarantee Type Selection */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-bank-gray mb-2">Выберите тип гарантии</h2>
+            <p className="text-muted-foreground">Работаем с 30 ведущими банками России</p>
           </div>
+          
+          <Card className="p-6">
+            <div className="space-y-6">
+              <div>
+                <Label htmlFor="guarantee-type" className="text-lg font-medium">Тип гарантии</Label>
+                <Select value={selectedGuaranteeType} onValueChange={setSelectedGuaranteeType}>
+                  <SelectTrigger className="mt-2">
+                    <SelectValue placeholder="Выберите тип банковской гарантии" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {guaranteeTypes.map((type) => (
+                      <SelectItem key={type.value} value={type.value}>
+                        <div className="flex flex-col">
+                          <span className="font-medium">{type.label}</span>
+                          <span className="text-sm text-muted-foreground">{type.range}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-          {/* AI Chat */}
-          <div className="lg:col-span-1">
-            <Card className="h-fit sticky top-4">
-              <CardHeader className="bg-gradient-to-r from-bank-blue to-bank-green text-white rounded-t-lg">
-                <CardTitle className="flex items-center gap-2">
-                  <Icon name="Bot" size={20} />
-                  ИИ-консультант
-                </CardTitle>
-                <CardDescription className="text-white/90">
-                  Помогу с выбором банка и ответами на возражения
-                </CardDescription>
-              </CardHeader>
-              
-              <CardContent className="p-0">
-                <div className="h-80 overflow-y-auto p-4 space-y-3">
-                  {chatMessages.map((msg, idx) => (
-                    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[80%] p-3 rounded-lg text-sm ${
-                        msg.role === 'user' 
-                          ? 'bg-bank-blue text-white' 
-                          : 'bg-muted'
-                      }`}>
-                        {msg.content}
-                      </div>
+              {selectedGuaranteeType && (
+                <div className="grid md:grid-cols-2 gap-6 pt-6 border-t">
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="federal-law">По какому ФЗ</Label>
+                      <Input 
+                        id="federal-law"
+                        placeholder="Например: ФЗ №44, ФЗ №223"
+                        value={federalLaw}
+                        onChange={(e) => setFederalLaw(e.target.value)}
+                        className="mt-1"
+                      />
                     </div>
-                  ))}
+
+                    <div>
+                      <Label htmlFor="tender-link">Ссылка на тендер</Label>
+                      <Input 
+                        id="tender-link"
+                        placeholder="https://zakupki.gov.ru/..."
+                        value={tenderLink}
+                        onChange={(e) => setTenderLink(e.target.value)}
+                        className="mt-1"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="guarantee-amount">Сумма гарантии</Label>
+                      <Input 
+                        id="guarantee-amount"
+                        placeholder="Например: 1 000 000 ₽"
+                        value={guaranteeAmount}
+                        onChange={(e) => setGuaranteeAmount(e.target.value)}
+                        className="mt-1"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="guarantee-period">Срок гарантии</Label>
+                      <Input 
+                        id="guarantee-period"
+                        placeholder="Например: 12 месяцев"
+                        value={guaranteePeriod}
+                        onChange={(e) => setGuaranteePeriod(e.target.value)}
+                        className="mt-1"
+                      />
+                    </div>
+                  </div>
                 </div>
-                
-                <div className="border-t p-4 space-y-3">
-                  <Textarea 
-                    placeholder="Задайте вопрос о гарантиях..."
-                    value={currentMessage}
-                    onChange={(e) => setCurrentMessage(e.target.value)}
-                    className="resize-none"
-                    rows={2}
-                  />
-                  <Button 
-                    onClick={handleSendMessage}
-                    className="w-full bg-bank-green hover:bg-bank-green/90"
-                    disabled={!currentMessage.trim()}
-                  >
-                    <Icon name="Send" size={16} className="mr-2" />
-                    Отправить
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+              )}
+            </div>
+          </Card>
         </div>
 
         {/* Documents Upload Section */}
-        <div className="mt-16">
+        <div className="max-w-4xl mx-auto mb-12">
           <h2 className="text-2xl font-bold text-bank-gray mb-6 text-center">
             Перечень необходимых документов для ООО
           </h2>
@@ -311,8 +224,8 @@ const Index = () => {
                       {idx + 1}. {doc.name}
                     </div>
                     <div className="text-xs text-muted-foreground mt-1">
-                      {uploadedFiles[doc.id]?.files?.length > 0 
-                        ? `Загружено файлов: ${uploadedFiles[doc.id].files.length}`
+                      {uploadedFiles[doc.id]?.length > 0 
+                        ? `Загружено файлов: ${uploadedFiles[doc.id].length}`
                         : 'Файл не загружен'
                       }
                     </div>
@@ -340,7 +253,7 @@ const Index = () => {
         </div>
 
         {/* Final Submit Button */}
-        <div className="mt-12 text-center">
+        <div className="text-center mb-12">
           <Button size="lg" className="bg-gradient-to-r from-bank-blue to-bank-green hover:opacity-90 text-lg px-12 py-3">
             <Icon name="Send" size={20} className="mr-3" />
             Подать заявку на банковскую гарантию
@@ -348,7 +261,7 @@ const Index = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-16 grid md:grid-cols-4 gap-6 text-center">
+        <div className="grid md:grid-cols-4 gap-6 text-center">
           {[
             { icon: 'Building2', label: 'Банков-партнеров', value: '30+' },
             { icon: 'FileText', label: 'Выданных гарантий', value: '5000+' },
