@@ -22,7 +22,7 @@ const Index = () => {
   const [tenderLink, setTenderLink] = useState('');
   const [guaranteeAmount, setGuaranteeAmount] = useState('');
   const [guaranteePeriod, setGuaranteePeriod] = useState('');
-  const [accessKey, setAccessKey] = useState('');
+  const [accessKey, setAccessKey] = useState('ba42c3d9-0cfe-43b4-816a-cbe491f04fca');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const requiredDocuments = [
