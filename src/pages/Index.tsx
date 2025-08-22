@@ -156,6 +156,42 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-6 py-12">
+        {/* Info Banner */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <Card className="bg-gradient-to-r from-bank-navy to-bank-blue text-white shadow-2xl border-0">
+            <CardContent className="p-8">
+              <div className="text-center space-y-6">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <Icon name="Award" size={32} className="text-white" />
+                  <h2 className="text-2xl font-bold">
+                    Мы официальные партнеры многих банков России!
+                  </h2>
+                </div>
+                
+                <div className="max-w-4xl mx-auto space-y-4 text-lg leading-relaxed">
+                  <p>
+                    Сайт создан в целях автоматизации выпуска банковской гарантии, для того чтобы уйти от телефонных переговоров, а сразу же приступить к оформлению банковской гарантии.
+                  </p>
+                  <p>
+                    Для этого вам нужно лишь один раз подать заявку и получить уже готовое решение от банков!
+                  </p>
+                  <div className="bg-white/10 p-4 rounded-lg mt-6">
+                    <div className="flex items-start gap-3">
+                      <Icon name="Mail" size={24} className="text-white mt-1 flex-shrink-0" />
+                      <div>
+                        <p className="font-semibold mb-2">Процесс работы:</p>
+                        <p className="text-sm">
+                          Все ссылки на подписания будут приходить к вам на почту. В случае дополнительных документов наш менеджер с вами свяжется по почте или в удобном для вас мессенджере.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Guarantee Type Selection */}
         <div className="max-w-5xl mx-auto mb-16">
           <div className="text-center mb-12">
