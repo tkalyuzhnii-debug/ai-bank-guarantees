@@ -69,6 +69,7 @@ const Index = () => {
   const [isTyping, setIsTyping] = useState(true);
 
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [hasPlayedWelcome, setHasPlayedWelcome] = useState(false);
   
   const robotMessages = [
     "Привет! Я ваш AI-помощник по банковским гарантиям!",
@@ -77,7 +78,7 @@ const Index = () => {
     "Работаем с 30 банками и гарантируем результат!"
   ];
 
-  // Text-to-speech function
+  // Text-to-speech function with female voice
   const speakText = (text: string) => {
     if ('speechSynthesis' in window && isSoundEnabled) {
       // Cancel any ongoing speech
@@ -85,21 +86,49 @@ const Index = () => {
       
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'ru-RU';
-      utterance.rate = 0.9;
-      utterance.pitch = 1.1;
+      utterance.rate = 0.85;
+      utterance.pitch = 1.3;
       utterance.volume = 0.8;
       
-      // Try to find Russian voice
+      // Try to find Russian female voice
       const voices = window.speechSynthesis.getVoices();
+      const femaleRussianVoice = voices.find(voice => 
+        (voice.lang.includes('ru') || voice.name.includes('Russian')) &&
+        (voice.name.includes('female') || voice.name.includes('Female') || voice.name.includes('Elena') || voice.name.includes('Milena'))
+      );
+      
+      // Fallback to any Russian voice
       const russianVoice = voices.find(voice => 
         voice.lang.includes('ru') || voice.name.includes('Russian')
       );
       
-      if (russianVoice) {
+      if (femaleRussianVoice) {
+        utterance.voice = femaleRussianVoice;
+      } else if (russianVoice) {
         utterance.voice = russianVoice;
       }
       
       window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Welcome message function
+  const playWelcomeMessage = () => {
+    if (isSoundEnabled) {
+      const welcomeText = "Привет! Я ваш помощник по оформлению банковских гарантий! Даже если у вас уже есть банк, в котором вы обслуживаетесь, или брокер, то мы всё равно можем попробовать вам помочь! Давайте сотрудничать! У нас возможно выгоднее предложения, чем где-либо! Для начала напишите нам в телеграме, а дальше мы расскажем, что делать!";
+      
+      // Delay to ensure voices are loaded
+      setTimeout(() => {
+        speakText(welcomeText);
+      }, 500);
+    }
+  };
+
+  // Auto-play welcome message on first load
+  const playAutoWelcome = () => {
+    if (!hasPlayedWelcome && isSoundEnabled) {
+      setHasPlayedWelcome(true);
+      playWelcomeMessage();
     }
   };
 
@@ -123,6 +152,11 @@ const Index = () => {
       setVladTime(new Date(now.toLocaleString("en-US", {timeZone: "Asia/Vladivostok"})));
     }, 1000);
     return () => clearInterval(timer);
+  }, []);
+
+  // Play welcome message on page load (only once)
+  useEffect(() => {
+    playAutoWelcome();
   }, []);
 
 
@@ -486,17 +520,31 @@ Email для связи: garantiya25@mail.ru
                           <div className="flex-1">
                             <div className="flex items-center justify-between mb-1">
                               <div className="text-blue-800 font-medium text-sm">AI-Помощник:</div>
-                              <button
-                                onClick={() => setIsSoundEnabled(!isSoundEnabled)}
-                                className="p-1 rounded-full hover:bg-gray-200 transition-colors"
-                                title={isSoundEnabled ? 'Отключить звук' : 'Включить звук'}
-                              >
-                                <Icon 
-                                  name={isSoundEnabled ? "Volume2" : "VolumeX"} 
-                                  size={16} 
-                                  className={isSoundEnabled ? "text-green-600" : "text-gray-400"}
-                                />
-                              </button>
+                              <div className="flex gap-1">
+                                <button
+                                  onClick={() => playWelcomeMessage()}
+                                  className="p-1 rounded-full hover:bg-gray-200 transition-colors"
+                                  title="Повторить приветствие"
+                                  disabled={!isSoundEnabled}
+                                >
+                                  <Icon 
+                                    name="Play" 
+                                    size={16} 
+                                    className={isSoundEnabled ? "text-blue-600" : "text-gray-400"}
+                                  />
+                                </button>
+                                <button
+                                  onClick={() => setIsSoundEnabled(!isSoundEnabled)}
+                                  className="p-1 rounded-full hover:bg-gray-200 transition-colors"
+                                  title={isSoundEnabled ? 'Отключить звук' : 'Включить звук'}
+                                >
+                                  <Icon 
+                                    name={isSoundEnabled ? "Volume2" : "VolumeX"} 
+                                    size={16} 
+                                    className={isSoundEnabled ? "text-green-600" : "text-gray-400"}
+                                  />
+                                </button>
+                              </div>
                             </div>
                             <div className="text-gray-800 text-sm leading-relaxed min-h-[40px]">
                               {typedText}
