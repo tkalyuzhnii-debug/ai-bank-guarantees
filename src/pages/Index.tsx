@@ -67,7 +67,7 @@ const Index = () => {
   const [typedText, setTypedText] = useState('');
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
-  const [hasSpoken, setHasSpoken] = useState(false);
+
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   
   const robotMessages = [
@@ -125,18 +125,7 @@ const Index = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Voice greeting on page load
-  useEffect(() => {
-    if (!hasSpoken) {
-      // Delay to ensure page is loaded and user can hear
-      const greetingTimer = setTimeout(() => {
-        speakText("Добро пожаловать! Я ваш помощник по банковским гарантиям. Заполните форму и получите лучшие условия!");
-        setHasSpoken(true);
-      }, 1500);
-      
-      return () => clearTimeout(greetingTimer);
-    }
-  }, [hasSpoken]);
+
 
   // Typing animation effect
   useEffect(() => {
@@ -158,11 +147,8 @@ const Index = () => {
       }, 50);
       return () => clearTimeout(typingTimer);
     } else {
-      // Message complete, speak it and then move to next
-      if (hasSpoken && currentMessageIndex === 0) {
-        // Only speak the typed messages after initial greeting
-        speakText(currentMessage);
-      }
+      // Message complete, move to next without speaking
+      // Auto-speak is disabled
       
       const pauseTimer = setTimeout(() => {
         setCurrentMessageIndex(prev => prev + 1);
