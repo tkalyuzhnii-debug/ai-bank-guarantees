@@ -192,11 +192,11 @@ const Index = () => {
           </Card>
         </div>
 
-        {/* Guarantee Type Selection */}
+        {/* Guarantee Form */}
         <div className="max-w-5xl mx-auto mb-16">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-bank-navy mb-4 tracking-tight">
-              Выберите тип гарантии
+              Заполнение заявки
             </h2>
             <div className="w-24 h-1 bg-bank-blue mx-auto"></div>
           </div>
@@ -204,95 +204,87 @@ const Index = () => {
           <Card className="shadow-xl border-2 border-bank-silver">
             <CardHeader className="bg-gradient-to-r from-bank-navy to-bank-blue text-white">
               <CardTitle className="text-xl flex items-center gap-3">
-                <Icon name="FileText" size={24} />
-                Параметры банковской гарантии
+                <Icon name="Edit3" size={24} />
+                Данные банковской гарантии
               </CardTitle>
               <CardDescription className="text-bank-light">
-                Заполните основную информацию для подбора оптимального предложения
+                Укажите основную информацию для оформления гарантии
               </CardDescription>
             </CardHeader>
             <CardContent className="p-8">
-              <div className="space-y-8">
-                <div>
-                  <Label htmlFor="guarantee-type" className="text-lg font-semibold text-bank-navy">
-                    Тип гарантии
-                  </Label>
-                  <Select value={selectedGuaranteeType} onValueChange={setSelectedGuaranteeType}>
-                    <SelectTrigger className="mt-3 h-12 text-base border-2 border-bank-silver focus:border-bank-blue">
-                      <SelectValue placeholder="Выберите тип банковской гарантии" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {guaranteeTypes.map((type) => (
-                        <SelectItem key={type.value} value={type.value} className="py-3">
-                          <div className="flex flex-col">
-                            <span className="font-semibold text-bank-navy">{type.label}</span>
-                            <span className="text-sm text-bank-slate">{type.range}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div>
+                    <Label htmlFor="tender-link" className="text-base font-semibold text-bank-navy">
+                      Ссылка на тендер
+                    </Label>
+                    <Input 
+                      id="tender-link"
+                      placeholder="https://zakupki.gov.ru/..."
+                      value={tenderLink}
+                      onChange={(e) => setTenderLink(e.target.value)}
+                      className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="guarantee-amount" className="text-base font-semibold text-bank-navy">
+                      Сумма гарантии
+                    </Label>
+                    <Input 
+                      id="guarantee-amount"
+                      placeholder="Например: 1 000 000 ₽"
+                      value={guaranteeAmount}
+                      onChange={(e) => setGuaranteeAmount(e.target.value)}
+                      className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="federal-law" className="text-base font-semibold text-bank-navy">
+                      По какому ФЗ
+                    </Label>
+                    <Input 
+                      id="federal-law"
+                      placeholder="Например: ФЗ №44, ФЗ №223"
+                      value={federalLaw}
+                      onChange={(e) => setFederalLaw(e.target.value)}
+                      className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
+                    />
+                  </div>
                 </div>
 
-                {selectedGuaranteeType && (
-                  <div className="grid md:grid-cols-2 gap-8 pt-8 border-t-2 border-bank-silver">
-                    <div className="space-y-6">
-                      <div>
-                        <Label htmlFor="federal-law" className="text-base font-semibold text-bank-navy">
-                          По какому ФЗ
-                        </Label>
-                        <Input 
-                          id="federal-law"
-                          placeholder="Например: ФЗ №44, ФЗ №223"
-                          value={federalLaw}
-                          onChange={(e) => setFederalLaw(e.target.value)}
-                          className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
-                        />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="tender-link" className="text-base font-semibold text-bank-navy">
-                          Ссылка на тендер
-                        </Label>
-                        <Input 
-                          id="tender-link"
-                          placeholder="https://zakupki.gov.ru/..."
-                          value={tenderLink}
-                          onChange={(e) => setTenderLink(e.target.value)}
-                          className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-6">
-                      <div>
-                        <Label htmlFor="guarantee-amount" className="text-base font-semibold text-bank-navy">
-                          Сумма гарантии
-                        </Label>
-                        <Input 
-                          id="guarantee-amount"
-                          placeholder="Например: 1 000 000 ₽"
-                          value={guaranteeAmount}
-                          onChange={(e) => setGuaranteeAmount(e.target.value)}
-                          className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
-                        />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="guarantee-period" className="text-base font-semibold text-bank-navy">
-                          Срок гарантии
-                        </Label>
-                        <Input 
-                          id="guarantee-period"
-                          placeholder="Например: 12 месяцев"
-                          value={guaranteePeriod}
-                          onChange={(e) => setGuaranteePeriod(e.target.value)}
-                          className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
-                        />
-                      </div>
-                    </div>
+                <div className="space-y-6">
+                  <div>
+                    <Label htmlFor="guarantee-type" className="text-base font-semibold text-bank-navy">
+                      Вид гарантии
+                    </Label>
+                    <Select value={selectedGuaranteeType} onValueChange={setSelectedGuaranteeType}>
+                      <SelectTrigger className="mt-2 h-12 text-base border-2 border-bank-silver focus:border-bank-blue">
+                        <SelectValue placeholder="Выберите вид гарантии" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="participation">Гарантия обеспечения заявки</SelectItem>
+                        <SelectItem value="execution">Гарантия исполнения контракта</SelectItem>
+                        <SelectItem value="warranty">Гарантия устранения недостатков</SelectItem>
+                        <SelectItem value="advance">Гарантия возврата аванса</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                )}
+
+                  <div>
+                    <Label htmlFor="guarantee-period" className="text-base font-semibold text-bank-navy">
+                      Срок гарантии
+                    </Label>
+                    <Input 
+                      id="guarantee-period"
+                      placeholder="Например: 12 месяцев"
+                      value={guaranteePeriod}
+                      onChange={(e) => setGuaranteePeriod(e.target.value)}
+                      className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
+                    />
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
