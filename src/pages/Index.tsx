@@ -206,13 +206,10 @@ Email для связи: garantiya25@mail.ru
    • Отправьте на garantiya25@mail.ru
 
 2️⃣ ЧЕРЕЗ TELEGRAM:
-   • Отправьте заявку + файлы в телеграм
-   • @YourTelegramBot
+   • Отправьте заявку + файлы консультанту
+   • @IT_business_service_selle
 
-3️⃣ ЧЕРЕЗ WHATSAPP:
-   • Отправьте на номер: +7-XXX-XXX-XX-XX
-
-4️⃣ ЧЕРЕЗ ОБЛАЧНОЕ ХРАНИЛИЩЕ:
+3️⃣ ЧЕРЕЗ ОБЛАЧНОЕ ХРАНИЛИЩЕ:
    • Загрузите файлы в Яндекс.Диск / Google Drive
    • Отправьте ссылку на garantiya25@mail.ru
 
@@ -681,15 +678,37 @@ Email для связи: garantiya25@mail.ru
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-r from-bank-navy to-bank-blue p-6 rounded-2xl shadow-xl">
-                  <div className="flex items-center justify-center gap-4">
-                    <Icon name="AtSign" size={24} className="text-white" />
-                    <a 
-                      href="mailto:garantiya25@mail.ru" 
-                      className="text-2xl font-bold text-white hover:text-yellow-300 transition-colors duration-300"
-                    >
-                      garantiya25@mail.ru
-                    </a>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="bg-gradient-to-r from-bank-navy to-bank-blue p-6 rounded-2xl shadow-xl">
+                    <div className="text-center">
+                      <Icon name="AtSign" size={24} className="text-white mx-auto mb-3" />
+                      <div className="text-sm text-white/80 mb-2">Email</div>
+                      <a 
+                        href="mailto:garantiya25@mail.ru" 
+                        className="text-xl font-bold text-white hover:text-yellow-300 transition-colors duration-300 break-all"
+                      >
+                        garantiya25@mail.ru
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-2xl shadow-xl">
+                    <div className="text-center">
+                      <Icon name="MessageCircle" size={24} className="text-white mx-auto mb-3" />
+                      <div className="text-sm text-white/80 mb-2">Telegram консультант</div>
+                      <a 
+                        href="https://t.me/IT_business_service_selle" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xl font-bold text-white hover:text-yellow-300 transition-colors duration-300"
+                      >
+                        @IT_business_service_selle
+                      </a>
+                      <div className="flex items-center justify-center gap-1 mt-2">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span className="text-xs text-white/80">Онлайн</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -721,7 +740,7 @@ Email для связи: garantiya25@mail.ru
                   </div>
                   <div className="text-sm text-yellow-800 space-y-2">
                     <p className="font-semibold">📎 Файлы документов отправляйте одним из способов:</p>
-                    <div className="grid md:grid-cols-2 gap-4 mt-4">
+                    <div className="grid md:grid-cols-3 gap-4 mt-4">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
                           <Icon name="Mail" size={16} className="text-yellow-600" />
@@ -731,10 +750,17 @@ Email для связи: garantiya25@mail.ru
                       </div>
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                          <Icon name="Cloud" size={16} className="text-yellow-600" />
-                          <span className="font-semibold">Облачное хранилище:</span>
+                          <Icon name="MessageCircle" size={16} className="text-yellow-600" />
+                          <span className="font-semibold">Telegram:</span>
                         </div>
-                        <p>Загрузите в Яндекс.Диск или Google Drive и отправьте ссылку</p>
+                        <p>Отправьте документы консультанту @IT_business_service_selle</p>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Icon name="Cloud" size={16} className="text-yellow-600" />
+                          <span className="font-semibold">Облако:</span>
+                        </div>
+                        <p>Загрузите в облако и отправьте ссылку</p>
                       </div>
                     </div>
                     <p className="text-xs mt-4 text-yellow-700">
@@ -768,6 +794,42 @@ Email для связи: garantiya25@mail.ru
           </div>
         </div>
       </footer>
+
+      {/* Floating Telegram Consultant */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <div className="group relative">
+          {/* Consultation bubble */}
+          <div className="absolute bottom-16 right-0 mb-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+            <div className="bg-gradient-to-r from-bank-navy to-bank-blue text-white px-4 py-3 rounded-lg shadow-xl border border-white/20 backdrop-blur-sm max-w-xs">
+              <div className="text-sm font-semibold mb-1">💬 Онлайн консультант</div>
+              <div className="text-xs opacity-90">
+                Нужна помощь с банковской гарантией? Напишите нам в Telegram!
+              </div>
+              {/* Arrow pointer */}
+              <div className="absolute bottom-0 right-4 transform translate-y-1/2 rotate-45 w-2 h-2 bg-gradient-to-r from-bank-navy to-bank-blue border-r border-b border-white/20"></div>
+            </div>
+          </div>
+
+          {/* Main consultant button */}
+          <a
+            href="https://t.me/IT_business_service_selle"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 animate-pulse hover:animate-none"
+          >
+            <Icon name="MessageCircle" size={28} />
+          </a>
+
+          {/* Online indicator */}
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-400 border-2 border-white rounded-full flex items-center justify-center">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
+          </div>
+
+          {/* Floating animation rings */}
+          <div className="absolute inset-0 rounded-full border-2 border-blue-400 opacity-75 animate-ping"></div>
+          <div className="absolute inset-0 rounded-full border-2 border-blue-300 opacity-50 animate-ping" style={{ animationDelay: '0.5s' }}></div>
+        </div>
+      </div>
     </div>
   );
 };
