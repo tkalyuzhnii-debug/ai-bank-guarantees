@@ -67,13 +67,41 @@ const Index = () => {
   const [typedText, setTypedText] = useState('');
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
+  const [hasSpoken, setHasSpoken] = useState(false);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   
   const robotMessages = [
-    "Привет! Я ваш AI-помощник по банковским гарантиям! 🤖",
-    "Помогу быстро оформить гарантию без лишних звонков! 📞❌", 
-    "Просто заполните форму ниже, и мы подберем лучшие условия! ✨",
-    "Работаем с 30+ банками и гарантируем результат! 🏦"
+    "Привет! Я ваш AI-помощник по банковским гарантиям!",
+    "Помогу быстро оформить гарантию без лишних звонков!", 
+    "Просто заполните форму ниже, и мы подберем лучшие условия!",
+    "Работаем с 30 банками и гарантируем результат!"
   ];
+
+  // Text-to-speech function
+  const speakText = (text: string) => {
+    if ('speechSynthesis' in window && isSoundEnabled) {
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ru-RU';
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1;
+      utterance.volume = 0.8;
+      
+      // Try to find Russian voice
+      const voices = window.speechSynthesis.getVoices();
+      const russianVoice = voices.find(voice => 
+        voice.lang.includes('ru') || voice.name.includes('Russian')
+      );
+      
+      if (russianVoice) {
+        utterance.voice = russianVoice;
+      }
+      
+      window.speechSynthesis.speak(utterance);
+    }
+  };
 
   const requiredDocuments = [
     { id: 'tender', name: 'Реестровый № торгов/ссылка на закупку' },
@@ -97,6 +125,19 @@ const Index = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Voice greeting on page load
+  useEffect(() => {
+    if (!hasSpoken) {
+      // Delay to ensure page is loaded and user can hear
+      const greetingTimer = setTimeout(() => {
+        speakText("Добро пожаловать! Я ваш помощник по банковским гарантиям. Заполните форму и получите лучшие условия!");
+        setHasSpoken(true);
+      }, 1500);
+      
+      return () => clearTimeout(greetingTimer);
+    }
+  }, [hasSpoken]);
+
   // Typing animation effect
   useEffect(() => {
     if (currentMessageIndex >= robotMessages.length) {
@@ -117,7 +158,12 @@ const Index = () => {
       }, 50);
       return () => clearTimeout(typingTimer);
     } else {
-      // Message complete, pause then move to next
+      // Message complete, speak it and then move to next
+      if (hasSpoken && currentMessageIndex === 0) {
+        // Only speak the typed messages after initial greeting
+        speakText(currentMessage);
+      }
+      
       const pauseTimer = setTimeout(() => {
         setCurrentMessageIndex(prev => prev + 1);
         setTypedText('');
@@ -452,7 +498,20 @@ Email для связи: garantiya25@mail.ru
                             </div>
                           </div>
                           <div className="flex-1">
-                            <div className="text-blue-800 font-medium text-sm mb-1">AI-Помощник:</div>
+                            <div className="flex items-center justify-between mb-1">
+                              <div className="text-blue-800 font-medium text-sm">AI-Помощник:</div>
+                              <button
+                                onClick={() => setIsSoundEnabled(!isSoundEnabled)}
+                                className="p-1 rounded-full hover:bg-gray-200 transition-colors"
+                                title={isSoundEnabled ? 'Отключить звук' : 'Включить звук'}
+                              >
+                                <Icon 
+                                  name={isSoundEnabled ? "Volume2" : "VolumeX"} 
+                                  size={16} 
+                                  className={isSoundEnabled ? "text-green-600" : "text-gray-400"}
+                                />
+                              </button>
+                            </div>
                             <div className="text-gray-800 text-sm leading-relaxed min-h-[40px]">
                               {typedText}
                               {typedText.length < (robotMessages[currentMessageIndex]?.length || 0) && (
@@ -489,6 +548,15 @@ Email для связи: garantiya25@mail.ru
                     <div className="absolute -top-2 -right-2">
                       <div className="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
                         <Icon name="Zap" size={24} className="text-white" />
+                      </div>
+                    </div>
+
+                    {/* Sound indicator */}
+                    <div className="absolute -bottom-2 -left-2">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        isSoundEnabled ? 'bg-blue-500 text-white' : 'bg-gray-400 text-gray-200'
+                      }`}>
+                        <Icon name={isSoundEnabled ? "Volume2" : "VolumeX"} size={18} />
                       </div>
                     </div>
                   </div>
