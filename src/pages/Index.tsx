@@ -221,7 +221,7 @@ Email для связи: garantiya25@mail.ru
                 <Icon name="Building2" size={36} className="text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-bank-navy tracking-tight">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent tracking-tight">
                   Банковские Гарантии РУ
                 </h1>
                 <p className="text-bank-slate font-medium">Партнеры ведущих российских банков</p>
