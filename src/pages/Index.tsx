@@ -578,7 +578,89 @@ Email для связи: garantiya25@mail.ru
             ))}
           </div>
         </div>
+
+        {/* Contacts Section */}
+        <div className="max-w-4xl mx-auto mt-16">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-green-600 mb-4 tracking-tight">
+              Контакты
+            </h2>
+            <div className="w-24 h-1 bg-bank-blue mx-auto"></div>
+          </div>
+          
+          <Card className="shadow-2xl border-2 border-bank-silver bg-gradient-to-br from-white to-bank-light">
+            <CardContent className="p-12">
+              <div className="text-center space-y-8">
+                <div className="flex items-center justify-center">
+                  <div className="p-4 bg-gradient-to-r from-bank-navy to-bank-blue rounded-full">
+                    <Icon name="Mail" size={48} className="text-white" />
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold text-bank-navy">
+                    Свяжитесь с нами
+                  </h3>
+                  <p className="text-lg text-bank-slate leading-relaxed">
+                    Для получения консультации по банковским гарантиям и подачи заявки
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-bank-navy to-bank-blue p-6 rounded-2xl shadow-xl">
+                  <div className="flex items-center justify-center gap-4">
+                    <Icon name="AtSign" size={24} className="text-white" />
+                    <a 
+                      href="mailto:garantiya25@mail.ru" 
+                      className="text-2xl font-bold text-white hover:text-yellow-300 transition-colors duration-300"
+                    >
+                      garantiya25@mail.ru
+                    </a>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6 mt-8">
+                  <div className="text-center p-4 bg-white rounded-lg border border-bank-silver shadow-md">
+                    <Icon name="Clock" size={24} className="mx-auto mb-2 text-bank-blue" />
+                    <div className="text-sm font-semibold text-bank-navy">Работаем</div>
+                    <div className="text-sm text-bank-slate">24/7</div>
+                  </div>
+                  <div className="text-center p-4 bg-white rounded-lg border border-bank-silver shadow-md">
+                    <Icon name="Zap" size={24} className="mx-auto mb-2 text-bank-blue" />
+                    <div className="text-sm font-semibold text-bank-navy">Быстрый ответ</div>
+                    <div className="text-sm text-bank-slate">В течение часа</div>
+                  </div>
+                  <div className="text-center p-4 bg-white rounded-lg border border-bank-silver shadow-md">
+                    <Icon name="Shield" size={24} className="mx-auto mb-2 text-bank-blue" />
+                    <div className="text-sm font-semibold text-bank-navy">Надежность</div>
+                    <div className="text-sm text-bank-slate">Официальные партнеры</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </main>
+      
+      {/* Footer */}
+      <footer className="bg-bank-navy text-white py-8 mt-16">
+        <div className="container mx-auto px-6 text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="p-2 bg-white rounded-lg">
+              <Icon name="Building2" size={24} className="text-bank-navy" />
+            </div>
+            <span className="text-xl font-bold text-yellow-400">Банковские Гарантии РУ</span>
+          </div>
+          <p className="text-bank-light mb-4">
+            Официальные партнеры ведущих российских банков
+          </p>
+          <div className="flex items-center justify-center gap-2 text-sm">
+            <Icon name="Mail" size={16} />
+            <a href="mailto:garantiya25@mail.ru" className="hover:text-yellow-300 transition-colors">
+              garantiya25@mail.ru
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
