@@ -62,6 +62,18 @@ const Index = () => {
   const [guaranteePeriod, setGuaranteePeriod] = useState('');
   const [accessKey, setAccessKey] = useState('ba42c3d9-0cfe-43b4-816a-cbe491f04fca');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Typing animation states
+  const [typedText, setTypedText] = useState('');
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
+  
+  const robotMessages = [
+    "Привет! Я ваш AI-помощник по банковским гарантиям! 🤖",
+    "Помогу быстро оформить гарантию без лишних звонков! 📞❌", 
+    "Просто заполните форму ниже, и мы подберем лучшие условия! ✨",
+    "Работаем с 30+ банками и гарантируем результат! 🏦"
+  ];
 
   const requiredDocuments = [
     { id: 'tender', name: 'Реестровый № торгов/ссылка на закупку' },
@@ -84,6 +96,35 @@ const Index = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Typing animation effect
+  useEffect(() => {
+    if (currentMessageIndex >= robotMessages.length) {
+      // Restart animation after a pause
+      const restartTimer = setTimeout(() => {
+        setCurrentMessageIndex(0);
+        setTypedText('');
+        setIsTyping(true);
+      }, 3000);
+      return () => clearTimeout(restartTimer);
+    }
+
+    const currentMessage = robotMessages[currentMessageIndex];
+    
+    if (typedText.length < currentMessage.length) {
+      const typingTimer = setTimeout(() => {
+        setTypedText(currentMessage.slice(0, typedText.length + 1));
+      }, 50);
+      return () => clearTimeout(typingTimer);
+    } else {
+      // Message complete, pause then move to next
+      const pauseTimer = setTimeout(() => {
+        setCurrentMessageIndex(prev => prev + 1);
+        setTypedText('');
+      }, 2000);
+      return () => clearTimeout(pauseTimer);
+    }
+  }, [typedText, currentMessageIndex, robotMessages]);
 
   const guaranteeTypes = [
     {
@@ -398,16 +439,53 @@ Email для связи: garantiya25@mail.ru
                   </div>
                 </div>
                 
-                {/* Right side - Robot Image */}
+                {/* Right side - Robot Image with Speech */}
                 <div className="flex items-center justify-center lg:justify-end">
                   <div className="relative">
-                    <div className="w-80 h-80 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center p-8">
+                    {/* Speech Bubble */}
+                    <div className="absolute -top-24 left-1/2 transform -translate-x-1/2 w-96 z-10">
+                      <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-2xl border-2 border-blue-200 relative speech-bubble">
+                        <div className="flex items-start gap-3">
+                          <div className="flex-shrink-0">
+                            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                              <Icon name="MessageSquare" size={16} className="text-white" />
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-blue-800 font-medium text-sm mb-1">AI-Помощник:</div>
+                            <div className="text-gray-800 text-sm leading-relaxed min-h-[40px]">
+                              {typedText}
+                              {typedText.length < (robotMessages[currentMessageIndex]?.length || 0) && (
+                                <span className="inline-block w-0.5 h-4 bg-blue-500 ml-0.5 animate-pulse"></span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        {/* Speech bubble arrow */}
+                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-4 h-4 bg-white/95 border-r border-b border-blue-200"></div>
+                      </div>
+                    </div>
+
+                    {/* Robot Avatar */}
+                    <div className="w-80 h-80 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center p-8 relative">
                       <img 
                         src="/img/86319c3d-a117-457a-b30d-0c5a73a26cb0.jpg" 
                         alt="AI Robot Assistant" 
                         className="w-full h-full object-cover rounded-full shadow-2xl"
                       />
+                      {/* Animated mouth/speaking indicator */}
+                      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2">
+                        {typedText.length < (robotMessages[currentMessageIndex]?.length || 0) && (
+                          <div className="flex gap-1">
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                          </div>
+                        )}
+                      </div>
                     </div>
+                    
+                    {/* Status indicator */}
                     <div className="absolute -top-2 -right-2">
                       <div className="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
                         <Icon name="Zap" size={24} className="text-white" />

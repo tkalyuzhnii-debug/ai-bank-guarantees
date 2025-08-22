@@ -132,3 +132,35 @@
 .animate-marquee-reverse {
   animation: marquee-reverse 25s linear infinite;
 }
+
+/* Typing cursor animation */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.typing-cursor {
+  animation: blink 1s infinite;
+}
+
+/* Speech bubble entrance animation */
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) translateX(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+  }
+}
+
+.speech-bubble {
+  animation: slideInFromTop 0.5s ease-out;
+}
