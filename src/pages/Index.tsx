@@ -261,7 +261,7 @@ Email для связи: garantiya25@mail.ru
               <div className="text-center space-y-6">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <Icon name="Award" size={32} className="text-white" />
-                  <h2 className="text-2xl font-bold">
+                  <h2 className="text-2xl font-bold text-green-400">
                     Мы официальные партнеры многих банков России!
                   </h2>
                 </div>
@@ -293,7 +293,7 @@ Email для связи: garantiya25@mail.ru
         {/* Guarantee Form */}
         <div className="max-w-5xl mx-auto mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-bank-navy mb-4 tracking-tight">
+            <h2 className="text-4xl font-bold text-green-600 mb-4 tracking-tight">
               Заполнение заявки
             </h2>
             <div className="w-24 h-1 bg-bank-blue mx-auto"></div>
@@ -301,7 +301,7 @@ Email для связи: garantiya25@mail.ru
           
           <Card className="shadow-xl border-2 border-bank-silver">
             <CardHeader className="bg-gradient-to-r from-bank-navy to-bank-blue text-white">
-              <CardTitle className="text-xl flex items-center gap-3">
+              <CardTitle className="text-xl flex items-center gap-3 text-green-300">
                 <Icon name="Edit3" size={24} />
                 Данные банковской гарантии
               </CardTitle>
@@ -406,7 +406,7 @@ Email для связи: garantiya25@mail.ru
         {/* Documents Upload Section */}
         <div className="max-w-5xl mx-auto mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-bank-navy mb-4 tracking-tight">
+            <h2 className="text-4xl font-bold text-green-600 mb-4 tracking-tight">
               Перечень необходимых документов
             </h2>
             <div className="w-24 h-1 bg-bank-blue mx-auto"></div>
