@@ -131,7 +131,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto mb-12">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-bank-gray mb-2">Выберите тип гарантии</h2>
-            <p className="text-muted-foreground">Работаем с 30 ведущими банками России</p>
+
           </div>
           
           <Card className="p-6">
@@ -213,7 +213,7 @@ const Index = () => {
         {/* Documents Upload Section */}
         <div className="max-w-4xl mx-auto mb-12">
           <h2 className="text-2xl font-bold text-bank-gray mb-6 text-center">
-            Перечень необходимых документов для ООО
+            Перечень необходимых документов
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             {requiredDocuments.map((doc, idx) => (
