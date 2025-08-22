@@ -85,8 +85,15 @@ const Index = () => {
   };
 
   const handleSubmit = async () => {
+    // Проверка ключа доступа
     if (accessKey !== 'ba42c3d9-0cfe-43b4-816a-cbe491f04fca') {
-      alert('Неверный ключ доступа');
+      alert('❌ Неверный ключ доступа');
+      return;
+    }
+
+    // Проверка заполненности полей
+    if (!tenderLink || !guaranteeAmount || !selectedGuaranteeType) {
+      alert('❌ Пожалуйста, заполните все обязательные поля');
       return;
     }
 
@@ -103,26 +110,48 @@ const Index = () => {
       formData.append('guaranteePeriod', guaranteePeriod);
       formData.append('accessKey', accessKey);
       
-      // Добавляем документы
+      // Добавляем информацию о загруженных документах
+      const documentsInfo = requiredDocuments.map(doc => {
+        const files = uploadedFiles[doc.id] || [];
+        return {
+          name: doc.name,
+          filesCount: files.length,
+          fileNames: files.map(f => f.name)
+        };
+      });
+      formData.append('documentsInfo', JSON.stringify(documentsInfo));
+      
+      // Добавляем файлы документов
       Object.entries(uploadedFiles).forEach(([docId, files]) => {
         files.forEach((file, index) => {
           formData.append(`document_${docId}_${index}`, file);
         });
       });
       
-      // Отправляем на email garantiya25@mail.ru
+      // Отправляем заявку
       const response = await fetch('/api/submit-guarantee', {
         method: 'POST',
         body: formData
       });
       
       if (response.ok) {
-        alert('Заявка успешно отправлена на garantiya25@mail.ru');
+        alert('✅ Заявка успешно отправлена на garantiya25@mail.ru!\n\nВ заявке содержатся:\n• Данные банковской гарантии\n• Загруженные документы\n• Контактная информация');
+        
+        // Очищаем форму после успешной отправки
+        setTenderLink('');
+        setGuaranteeAmount('');
+        setFederalLaw('');
+        setSelectedGuaranteeType('');
+        setGuaranteePeriod('');
+        setAccessKey('');
+        setUploadedFiles({});
       } else {
-        alert('Ошибка при отправке заявки');
+        const errorData = await response.json();
+        alert(`❌ Ошибка при отправке заявки: ${errorData.message || 'Неизвестная ошибка'}`);
       }
     } catch (error) {
-      alert('Ошибка при отправке заявки');
+      console.error('Ошибка отправки:', error);
+      alert('❌ Ошибка при отправке заявки. Проверьте интернет-соединение и попробуйте снова.');
     } finally {
       setIsSubmitting(false);
     }
