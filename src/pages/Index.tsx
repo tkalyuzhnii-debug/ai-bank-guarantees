@@ -188,6 +188,51 @@ ${documentsInfo.map(doc =>
 Email для связи: garantiya25@mail.ru
 `;
 
+      // Создаем архив с файлами для скачивания
+      const hasFiles = Object.values(uploadedFiles).some(files => files.length > 0);
+      
+      if (hasFiles) {
+        // Показываем инструкции по отправке файлов
+        const instruction = `
+✅ ЗАЯВКА ПОДГОТОВЛЕНА!
+
+📋 ДАННЫЕ ОТПРАВЛЕНЫ В ПОЧТОВЫЙ КЛИЕНТ
+
+📁 ОТПРАВКА ФАЙЛОВ - ВЫБЕРИТЕ СПОСОБ:
+
+1️⃣ ЧЕРЕЗ ПОЧТОВЫЙ КЛИЕНТ:
+   • Откройте письмо в почтовом клиенте
+   • Прикрепите файлы документов вручную
+   • Отправьте на garantiya25@mail.ru
+
+2️⃣ ЧЕРЕЗ TELEGRAM:
+   • Отправьте заявку + файлы в телеграм
+   • @YourTelegramBot
+
+3️⃣ ЧЕРЕЗ WHATSAPP:
+   • Отправьте на номер: +7-XXX-XXX-XX-XX
+
+4️⃣ ЧЕРЕЗ ОБЛАЧНОЕ ХРАНИЛИЩЕ:
+   • Загрузите файлы в Яндекс.Диск / Google Drive
+   • Отправьте ссылку на garantiya25@mail.ru
+
+⚠️ ФАЙЛЫ НЕ МОГУТ БЫТЬ ОТПРАВЛЕНЫ АВТОМАТИЧЕСКИ из браузера по соображениям безопасности.
+`;
+        
+        alert(instruction);
+        
+        // Создаем файл с информацией для скачивания
+        const instructionBlob = new Blob([emailContent + '\n\n' + instruction], { type: 'text/plain;charset=utf-8' });
+        const instructionUrl = URL.createObjectURL(instructionBlob);
+        const instructionLink = document.createElement('a');
+        instructionLink.href = instructionUrl;
+        instructionLink.download = `Заявка_${Date.now()}.txt`;
+        document.body.appendChild(instructionLink);
+        instructionLink.click();
+        document.body.removeChild(instructionLink);
+        URL.revokeObjectURL(instructionUrl);
+      }
+      
       // Создаем mailto ссылку для отправки
       const subject = encodeURIComponent('Заявка на банковскую гарантию');
       const body = encodeURIComponent(emailContent);
@@ -196,19 +241,23 @@ Email для связи: garantiya25@mail.ru
       // Открываем почтовый клиент
       window.location.href = mailtoLink;
       
-      // Показываем успешное сообщение
+      // Показываем сообщение для случаев без файлов
+      if (!hasFiles) {
+        setTimeout(() => {
+          alert('✅ Заявка отправлена в почтовый клиент!\n\nПисьмо подготовлено для отправки на garantiya25@mail.ru');
+        }, 1000);
+      }
+      
+      // Очищаем форму после подготовки к отправке
       setTimeout(() => {
-        alert('✅ Заявка подготовлена для отправки!\n\nОткрылся ваш почтовый клиент для отправки на garantiya25@mail.ru\n\nВ заявке содержатся:\n• Данные банковской гарантии\n• Информация о загруженных документах\n• Контактная информация');
-        
-        // Очищаем форму после подготовки к отправке
         setTenderLink('');
         setGuaranteeAmount('');
         setFederalLaw('');
         setSelectedGuaranteeType('');
         setGuaranteePeriod('');
-        setAccessKey('');
+        setAccessKey('ba42c3d9-0cfe-43b4-816a-cbe491f04fca');
         setUploadedFiles({});
-      }, 1000);
+      }, 2000);
       
     } catch (error) {
       console.error('Ошибка подготовки заявки:', error);
@@ -633,6 +682,38 @@ Email для связи: garantiya25@mail.ru
                     <Icon name="Shield" size={24} className="mx-auto mb-2 text-bank-blue" />
                     <div className="text-sm font-semibold text-bank-navy">Надежность</div>
                     <div className="text-sm text-bank-slate">Официальные партнеры</div>
+                  </div>
+                </div>
+
+                {/* File Upload Instructions */}
+                <div className="mt-8 p-6 bg-yellow-50 border-2 border-yellow-200 rounded-xl">
+                  <div className="flex items-center justify-center gap-3 mb-4">
+                    <Icon name="FileText" size={24} className="text-yellow-600" />
+                    <h4 className="text-lg font-bold text-yellow-800">
+                      Как отправить документы
+                    </h4>
+                  </div>
+                  <div className="text-sm text-yellow-800 space-y-2">
+                    <p className="font-semibold">📎 Файлы документов отправляйте одним из способов:</p>
+                    <div className="grid md:grid-cols-2 gap-4 mt-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Icon name="Mail" size={16} className="text-yellow-600" />
+                          <span className="font-semibold">Email:</span>
+                        </div>
+                        <p>Прикрепите файлы к письму на garantiya25@mail.ru</p>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Icon name="Cloud" size={16} className="text-yellow-600" />
+                          <span className="font-semibold">Облачное хранилище:</span>
+                        </div>
+                        <p>Загрузите в Яндекс.Диск или Google Drive и отправьте ссылку</p>
+                      </div>
+                    </div>
+                    <p className="text-xs mt-4 text-yellow-700">
+                      ⚠️ Автоматическая отправка файлов через браузер невозможна по соображениям безопасности
+                    </p>
                   </div>
                 </div>
               </div>
