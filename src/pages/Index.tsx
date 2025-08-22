@@ -22,6 +22,8 @@ const Index = () => {
   const [tenderLink, setTenderLink] = useState('');
   const [guaranteeAmount, setGuaranteeAmount] = useState('');
   const [guaranteePeriod, setGuaranteePeriod] = useState('');
+  const [accessKey, setAccessKey] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const requiredDocuments = [
     { id: 'tender', name: 'Реестровый № торгов/ссылка на закупку' },
@@ -79,6 +81,50 @@ const Index = () => {
         ...prev,
         [docId]: [...(prev[docId] || []), ...newFiles]
       }));
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (accessKey !== 'ba42c3d9-0cfe-43b4-816a-cbe491f04fca') {
+      alert('Неверный ключ доступа');
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const formData = new FormData();
+      
+      // Добавляем данные гарантии
+      formData.append('tenderLink', tenderLink);
+      formData.append('guaranteeAmount', guaranteeAmount);
+      formData.append('federalLaw', federalLaw);
+      formData.append('guaranteeType', selectedGuaranteeType);
+      formData.append('guaranteePeriod', guaranteePeriod);
+      formData.append('accessKey', accessKey);
+      
+      // Добавляем документы
+      Object.entries(uploadedFiles).forEach(([docId, files]) => {
+        files.forEach((file, index) => {
+          formData.append(`document_${docId}_${index}`, file);
+        });
+      });
+      
+      // Отправляем на email garantiya25@mail.ru
+      const response = await fetch('/api/submit-guarantee', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (response.ok) {
+        alert('Заявка успешно отправлена на garantiya25@mail.ru');
+      } else {
+        alert('Ошибка при отправке заявки');
+      }
+    } catch (error) {
+      alert('Ошибка при отправке заявки');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -284,6 +330,21 @@ const Index = () => {
                       className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
                     />
                   </div>
+
+                  <div>
+                    <Label htmlFor="access-key" className="text-base font-semibold text-bank-navy">
+                      <Icon name="Key" size={16} className="inline mr-2" />
+                      Ключ доступа
+                    </Label>
+                    <Input 
+                      id="access-key"
+                      type="password"
+                      placeholder="Введите ключ доступа"
+                      value={accessKey}
+                      onChange={(e) => setAccessKey(e.target.value)}
+                      className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
+                    />
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -359,11 +420,25 @@ const Index = () => {
         <div className="text-center mb-16">
           <Button 
             size="lg" 
-            className="bg-gradient-to-r from-bank-navy to-bank-blue hover:from-bank-blue hover:to-bank-navy text-white font-semibold text-lg px-16 py-4 shadow-xl hover:shadow-2xl transition-all duration-300"
+            onClick={handleSubmit}
+            disabled={isSubmitting || !accessKey}
+            className="bg-gradient-to-r from-bank-navy to-bank-blue hover:from-bank-blue hover:to-bank-navy text-white font-semibold text-lg px-16 py-4 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50"
           >
-            <Icon name="Send" size={24} className="mr-4" />
-            Подать заявку на банковскую гарантию
+            {isSubmitting ? (
+              <>
+                <Icon name="Loader2" size={24} className="mr-4 animate-spin" />
+                Отправка заявки...
+              </>
+            ) : (
+              <>
+                <Icon name="Send" size={24} className="mr-4" />
+                Подать заявку на банковскую гарантию
+              </>
+            )}
           </Button>
+          <p className="text-sm text-bank-slate mt-4">
+            Заявка будет отправлена на garantiya25@mail.ru
+          </p>
         </div>
 
         {/* Stats Section */}
