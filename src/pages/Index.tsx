@@ -14,8 +14,23 @@ const Index = () => {
   const [currencyRates] = useState({
     usd: 89.45,
     eur: 95.67,
-    cny: 12.34
+    cny: 12.34,
+    gold: 5890.50,
+    platinum: 2845.30
   });
+  
+  const [bankRates] = useState([
+    { bank: 'Сбербанк', rate: '1.5%' },
+    { bank: 'ВТБ', rate: '1.7%' },
+    { bank: 'Газпромбанк', rate: '1.8%' },
+    { bank: 'Альфа-Банк', rate: '2.0%' },
+    { bank: 'Россельхозбанк', rate: '1.9%' },
+    { bank: 'Открытие', rate: '2.1%' },
+    { bank: 'Промсвязьбанк', rate: '2.2%' },
+    { bank: 'МКБ', rate: '2.0%' },
+    { bank: 'Росбанк', rate: '1.8%' },
+    { bank: 'Райффайзенбанк', rate: '1.6%' }
+  ]);
   
   const [selectedGuaranteeType, setSelectedGuaranteeType] = useState('');
   const [federalLaw, setFederalLaw] = useState('');
@@ -186,29 +201,31 @@ Email для связи: garantiya25@mail.ru
       <div className="bg-bank-navy text-white py-2.5 border-b border-bank-silver">
         <div className="animate-marquee whitespace-nowrap flex space-x-12 text-sm font-medium">
           <span className="flex items-center gap-2">
-            <Icon name="TrendingUp" size={14} />
+            <Icon name="DollarSign" size={14} />
             USD: {currencyRates.usd} ₽
           </span>
           <span className="flex items-center gap-2">
-            <Icon name="TrendingUp" size={14} />
+            <Icon name="Euro" size={14} />
             EUR: {currencyRates.eur} ₽
           </span>
           <span className="flex items-center gap-2">
-            <Icon name="TrendingUp" size={14} />
+            <Icon name="Yen" size={14} />
             CNY: {currencyRates.cny} ₽
           </span>
           <span className="flex items-center gap-2">
-            <Icon name="TrendingUp" size={14} />
-            USD: {currencyRates.usd} ₽
+            <Icon name="Star" size={14} />
+            Золото: {currencyRates.gold} ₽/унц
           </span>
           <span className="flex items-center gap-2">
-            <Icon name="TrendingUp" size={14} />
-            EUR: {currencyRates.eur} ₽
+            <Icon name="Gem" size={14} />
+            Платина: {currencyRates.platinum} ₽/унц
           </span>
-          <span className="flex items-center gap-2">
-            <Icon name="TrendingUp" size={14} />
-            CNY: {currencyRates.cny} ₽
-          </span>
+          {bankRates.map((bank, idx) => (
+            <span key={idx} className="flex items-center gap-2">
+              <Icon name="Building2" size={14} />
+              {bank.bank}: от {bank.rate}
+            </span>
+          ))}
         </div>
       </div>
       
@@ -232,14 +249,14 @@ Email для связи: garantiya25@mail.ru
                 <div className="text-sm space-y-2">
                   <div className="flex items-center gap-3">
                     <Icon name="Clock" size={16} className="text-bank-navy" />
-                    <span className="text-bank-navy font-medium">
-                      МСК: {moscowTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
+                    <span className="text-bank-navy font-medium font-mono bg-black text-green-400 px-2 py-1 rounded border">
+                      МОСКВА: {moscowTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Icon name="Clock" size={16} className="text-bank-slate" />
-                    <span className="text-bank-slate font-medium">
-                      ВЛД: {vladTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
+                    <span className="text-bank-slate font-medium font-mono bg-black text-green-400 px-2 py-1 rounded border">
+                      ВЛАДИВОСТОК: {vladTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                     </span>
                   </div>
                 </div>
