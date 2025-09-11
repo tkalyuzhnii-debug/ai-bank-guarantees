@@ -9,51 +9,7 @@ import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
-  const [moscowTime, setMoscowTime] = useState(new Date());
-  const [vladTime, setVladTime] = useState(new Date());
-  const [currencyRates] = useState({
-    usd: 89.45,
-    eur: 95.67,
-    cny: 12.34,
-    gold: 5890.50,
-    platinum: 2845.30
-  });
-  
-  const [bankRates] = useState([
-    { bank: 'Сбербанк', rate: '1.5%' },
-    { bank: 'ВТБ', rate: '1.7%' },
-    { bank: 'Газпромбанк', rate: '1.8%' },
-    { bank: 'Альфа-Банк', rate: '2.0%' },
-    { bank: 'Россельхозбанк', rate: '1.9%' },
-    { bank: 'Открытие', rate: '2.1%' },
-    { bank: 'Промсвязьбанк', rate: '2.2%' },
-    { bank: 'МКБ', rate: '2.0%' },
-    { bank: 'Росбанк', rate: '1.8%' },
-    { bank: 'Райффайзенбанк', rate: '1.6%' }
-  ]);
-  
-  const [allBankRates] = useState([
-    { bank: 'Сбербанк', rate: '1.5%' },
-    { bank: 'ВТБ', rate: '1.7%' },
-    { bank: 'Газпромбанк', rate: '1.8%' },
-    { bank: 'Альфа-Банк', rate: '2.0%' },
-    { bank: 'Россельхозбанк', rate: '1.9%' },
-    { bank: 'Открытие', rate: '2.1%' },
-    { bank: 'Промсвязьбанк', rate: '2.2%' },
-    { bank: 'МКБ', rate: '2.0%' },
-    { bank: 'Росбанк', rate: '1.8%' },
-    { bank: 'Райффайзенбанк', rate: '1.6%' },
-    { bank: 'Тинькофф Банк', rate: '1.9%' },
-    { bank: 'УБРиР', rate: '2.3%' },
-    { bank: 'АК БАРС', rate: '2.1%' },
-    { bank: 'Банк Зенит', rate: '2.4%' },
-    { bank: 'Совкомбанк', rate: '2.0%' },
-    { bank: 'Ситибанк', rate: '1.8%' },
-    { bank: 'Банк Санкт-Петербург', rate: '2.2%' },
-    { bank: 'Транскапиталбанк', rate: '2.5%' },
-    { bank: 'Росгосстрах Банк', rate: '2.3%' },
-    { bank: 'Банк Уралсиб', rate: '2.4%' }
-  ]);
+
   
   const [selectedGuaranteeType, setSelectedGuaranteeType] = useState('');
   const [federalLaw, setFederalLaw] = useState('');
@@ -63,19 +19,11 @@ const Index = () => {
   const [accessKey, setAccessKey] = useState('ba42c3d9-0cfe-43b4-816a-cbe491f04fca');
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Typing animation states
-  const [typedText, setTypedText] = useState('');
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(true);
+
 
 
   
-  const robotMessages = [
-    "Привет! Я ваш AI-помощник по банковским гарантиям!",
-    "Помогу быстро оформить гарантию без лишних звонков!", 
-    "Просто заполните форму ниже, и мы подберем лучшие условия!",
-    "Работаем с 30 банками и гарантируем результат!"
-  ];
+
 
 
 
@@ -92,49 +40,7 @@ const Index = () => {
 
   const [uploadedFiles, setUploadedFiles] = useState<{[key: string]: File[]}>({});
   
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date();
-      setMoscowTime(new Date(now.toLocaleString("en-US", {timeZone: "Europe/Moscow"})));
-      setVladTime(new Date(now.toLocaleString("en-US", {timeZone: "Asia/Vladivostok"})));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
-
-
-
-
-  // Typing animation effect
-  useEffect(() => {
-    if (currentMessageIndex >= robotMessages.length) {
-      // Restart animation after a pause
-      const restartTimer = setTimeout(() => {
-        setCurrentMessageIndex(0);
-        setTypedText('');
-        setIsTyping(true);
-      }, 3000);
-      return () => clearTimeout(restartTimer);
-    }
-
-    const currentMessage = robotMessages[currentMessageIndex];
-    
-    if (typedText.length < currentMessage.length) {
-      const typingTimer = setTimeout(() => {
-        setTypedText(currentMessage.slice(0, typedText.length + 1));
-      }, 50);
-      return () => clearTimeout(typingTimer);
-    } else {
-      // Message complete, move to next without speaking
-      // Auto-speak is disabled
-      
-      const pauseTimer = setTimeout(() => {
-        setCurrentMessageIndex(prev => prev + 1);
-        setTypedText('');
-      }, 2000);
-      return () => clearTimeout(pauseTimer);
-    }
-  }, [typedText, currentMessageIndex, robotMessages]);
 
   const guaranteeTypes = [
     {
@@ -316,184 +222,38 @@ Email для связи: garantiya25@mail.ru
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-100 via-yellow-200 to-yellow-300 relative">
-      {/* Robot Background */}
-      <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-5 pointer-events-none"
-        style={{ backgroundImage: 'url(/img/86319c3d-a117-457a-b30d-0c5a73a26cb0.jpg)' }}
-      ></div>
-      {/* Currency Ticker */}
-      <div className="bg-bank-navy text-white py-2.5 border-b border-bank-silver">
-        <div className="animate-marquee whitespace-nowrap flex space-x-12 text-sm font-medium">
-          <span className="flex items-center gap-2">
-            <Icon name="DollarSign" size={14} />
-            USD: {currencyRates.usd} ₽
-          </span>
-          <span className="flex items-center gap-2">
-            <Icon name="Euro" size={14} />
-            EUR: {currencyRates.eur} ₽
-          </span>
-          <span className="flex items-center gap-2">
-            <Icon name="Yen" size={14} />
-            CNY: {currencyRates.cny} ₽
-          </span>
-          <span className="flex items-center gap-2">
-            <Icon name="Star" size={14} />
-            Золото: {currencyRates.gold} ₽/унц
-          </span>
-          <span className="flex items-center gap-2">
-            <Icon name="Gem" size={14} />
-            Платина: {currencyRates.platinum} ₽/унц
-          </span>
-          {bankRates.map((bank, idx) => (
-            <span key={idx} className="flex items-center gap-2">
-              <Icon name="Building2" size={14} />
-              {bank.bank}: от {bank.rate}
-            </span>
-          ))}
-        </div>
-      </div>
-      
-      {/* Bank Rates Ticker - Reverse Direction */}
-      <div className="bg-gradient-to-r from-bank-blue to-bank-navy text-white py-2.5 border-b border-bank-silver">
-        <div className="animate-marquee-reverse whitespace-nowrap flex space-x-12 text-sm font-medium">
-          {allBankRates.map((bank, idx) => (
-            <span key={idx} className="flex items-center gap-2">
-              <Icon name="TrendingDown" size={14} />
-              {bank.bank}: от {bank.rate}
-            </span>
-          ))}
-          {allBankRates.map((bank, idx) => (
-            <span key={`repeat-${idx}`} className="flex items-center gap-2">
-              <Icon name="TrendingDown" size={14} />
-              {bank.bank}: от {bank.rate}
-            </span>
-          ))}
-        </div>
-      </div>
-      
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-sm shadow-md border-b-2 border-bank-silver">
+      <header className="bg-white shadow-md border-b border-gray-200">
         <div className="container mx-auto px-6 py-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-bank-navy rounded-lg">
-                <Icon name="Building2" size={36} className="text-white" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent tracking-tight">
-                  Банковские Гарантии РУ
-                </h1>
-                <p className="text-gray-400 font-medium">Партнеры ведущих российских банков</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-6">
-              <div className="bg-bank-light p-4 rounded-lg border border-bank-silver">
-                <div className="text-sm space-y-2">
-                  <div className="flex items-center gap-3">
-                    <Icon name="Clock" size={16} className="text-bank-navy" />
-                    <span className="text-bank-navy font-medium font-mono bg-black text-green-400 px-2 py-1 rounded border">
-                      МОСКВА: {moscowTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Icon name="Clock" size={16} className="text-bank-slate" />
-                    <span className="text-bank-slate font-medium font-mono bg-black text-green-400 px-2 py-1 rounded border">
-                      ВЛАДИВОСТОК: {vladTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                    </span>
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              Банковские Гарантии РУ
+            </h1>
+            <p className="text-gray-600 mb-4">Партнеры ведущих российских банков</p>
+            <div className="text-center">
+              <p className="text-lg text-gray-800 max-w-3xl mx-auto mb-6">
+                Сайт создан в целях автоматизации выпуска банковской гарантии, для того чтобы уйти от телефонных переговоров, 
+                а сразу же приступить к оформлению банковской гарантии.
+              </p>
+              <div className="bg-blue-50 p-6 rounded-lg max-w-2xl mx-auto">
+                <div className="flex items-start gap-3">
+                  <Icon name="Mail" size={24} className="text-blue-600 mt-1 flex-shrink-0" />
+                  <div className="text-left">
+                    <p className="font-semibold text-gray-900 mb-2">Процесс работы:</p>
+                    <p className="text-gray-700">
+                      Все ссылки на подписания будут приходить к вам на почту. В случае дополнительных документов наш менеджер 
+                      с вами свяжется по почте или в удобном для вас мессенджере.
+                    </p>
                   </div>
                 </div>
               </div>
-              <Badge variant="outline" className="text-bank-green border-bank-green px-4 py-2 text-sm font-semibold">
-                <Icon name="Circle" size={8} className="text-bank-green mr-2" />
-                Онлайн 24/7
-              </Badge>
             </div>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-6 py-12">
-        {/* Info Banner */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <Card className="bg-gradient-to-r from-bank-navy to-bank-blue text-white shadow-2xl border-0 relative overflow-hidden">
-            <CardContent className="p-8 relative z-10">
-              <div className="grid lg:grid-cols-2 gap-8 items-center">
-                {/* Left side - Text content */}
-                <div className="text-center lg:text-left space-y-6">
-                  <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
-                    <Icon name="Award" size={32} className="text-white" />
-                    <h2 className="text-2xl font-bold text-green-400">
-                      Мы официальные партнеры многих банков России!
-                    </h2>
-                  </div>
-                  
-                  <div className="space-y-4 text-lg leading-relaxed">
-                    <p>
-                      Сайт создан в целях автоматизации выпуска банковской гарантии, для того чтобы уйти от телефонных переговоров, а сразу же приступить к оформлению банковской гарантии.
-                    </p>
-                    <p>
-                      Для этого вам нужно лишь один раз подать заявку и получить уже готовое решение от банков!
-                    </p>
-                    <div className="bg-white/10 p-4 rounded-lg mt-6">
-                      <div className="flex items-start gap-3">
-                        <Icon name="Mail" size={24} className="text-white mt-1 flex-shrink-0" />
-                        <div>
-                          <p className="font-semibold mb-2">Процесс работы:</p>
-                          <p className="text-sm">
-                            Все ссылки на подписания будут приходить к вам на почту. В случае дополнительных документов наш менеджер с вами свяжется по почте или в удобном для вас мессенджере.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Right side - Robot Image with Speech */}
-                <div className="flex items-center justify-center lg:justify-end">
-                  <div className="relative">
-                    {/* Speech Bubble */}
-                    <div className="absolute -top-24 left-1/2 transform -translate-x-1/2 w-96 z-10">
-                      <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-2xl border-2 border-blue-200 relative speech-bubble">
-                        <div className="flex items-start gap-3">
-                          <div className="flex-shrink-0">
-                            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                              <Icon name="MessageSquare" size={16} className="text-white" />
-                            </div>
-                          </div>
-                          <div className="flex-1">
-                            <div className="text-blue-800 font-medium text-sm mb-1">AI-Помощник:</div>
-                            <div className="text-gray-800 text-sm leading-relaxed min-h-[40px]">
-                              {typedText}
-                              {typedText.length < (robotMessages[currentMessageIndex]?.length || 0) && (
-                                <span className="inline-block w-0.5 h-4 bg-blue-500 ml-0.5 animate-pulse"></span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        {/* Speech bubble arrow */}
-                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-4 h-4 bg-white/95 border-r border-b border-blue-200"></div>
-                      </div>
-                    </div>
-
-                    {/* Robot Avatar */}
-                    <div className="w-80 h-80 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center p-8 relative">
-                      <img 
-                        src="/img/86319c3d-a117-457a-b30d-0c5a73a26cb0.jpg" 
-                        alt="AI Robot Assistant" 
-                        className="w-full h-full object-cover rounded-full shadow-2xl"
-                      />
-                      {/* Animated mouth/speaking indicator */}
-                      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2">
-                        {typedText.length < (robotMessages[currentMessageIndex]?.length || 0) && (
-                          <div className="flex gap-1">
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
                     
                     {/* Status indicator */}
                     <div className="absolute -top-2 -right-2">
