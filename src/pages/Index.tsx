@@ -254,21 +254,6 @@ Email для связи: garantiya25@mail.ru
       </header>
 
       <main className="container mx-auto px-6 py-12">
-                    
-                    {/* Status indicator */}
-                    <div className="absolute -top-2 -right-2">
-                      <div className="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
-                        <Icon name="Zap" size={24} className="text-white" />
-                      </div>
-                    </div>
-
-
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
         {/* Guarantee Form */}
         <div className="max-w-5xl mx-auto mb-16">
