@@ -228,7 +228,7 @@ Email для связи: garantiya25@mail.ru
               <p className="text-gray-600">Партнеры ведущих российских банков</p>
             </div>
           </div>
-          <div className="text-center"
+          <div className="text-center">
             <div className="text-center">
               <p className="text-lg text-gray-800 max-w-3xl mx-auto mb-6">
                 Сайт создан в целях автоматизации выпуска банковской гарантии, для того чтобы уйти от телефонных переговоров, 
