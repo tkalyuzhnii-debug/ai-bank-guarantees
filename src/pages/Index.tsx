@@ -80,12 +80,6 @@ const Index = () => {
   };
 
   const handleSubmit = async () => {
-    // Проверка ключа доступа
-    if (accessKey !== 'ba42c3d9-0cfe-43b4-816a-cbe491f04fca') {
-      alert('❌ Неверный ключ доступа');
-      return;
-    }
-
     // Проверка заполненности полей
     if (!tenderLink || !guaranteeAmount || !selectedGuaranteeType) {
       alert('❌ Пожалуйста, заполните все обязательные поля');
@@ -226,11 +220,15 @@ Email для связи: garantiya25@mail.ru
       {/* Header */}
       <header className="bg-white shadow-md border-b border-gray-200">
         <div className="container mx-auto px-6 py-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              Банковские Гарантии РУ
-            </h1>
-            <p className="text-gray-600 mb-4">Партнеры ведущих российских банков</p>
+          <div className="flex justify-between items-start mb-6">
+            <div className="text-left">
+              <h1 className="text-4xl font-bold text-yellow-600 mb-2">
+                Банковские Гарантии РУ
+              </h1>
+              <p className="text-gray-600">Партнеры ведущих российских банков</p>
+            </div>
+          </div>
+          <div className="text-center"
             <div className="text-center">
               <p className="text-lg text-gray-800 max-w-3xl mx-auto mb-6">
                 Сайт создан в целях автоматизации выпуска банковской гарантии, для того чтобы уйти от телефонных переговоров, 
@@ -348,20 +346,7 @@ Email для связи: garantiya25@mail.ru
                     />
                   </div>
 
-                  <div>
-                    <Label htmlFor="access-key" className="text-base font-semibold text-bank-navy">
-                      <Icon name="Key" size={16} className="inline mr-2" />
-                      Ключ доступа
-                    </Label>
-                    <Input 
-                      id="access-key"
-                      type="password"
-                      placeholder="Введите ключ доступа"
-                      value={accessKey}
-                      onChange={(e) => setAccessKey(e.target.value)}
-                      className="mt-2 h-12 border-2 border-bank-silver focus:border-bank-blue"
-                    />
-                  </div>
+
                 </div>
               </div>
             </CardContent>
@@ -438,7 +423,7 @@ Email для связи: garantiya25@mail.ru
           <Button 
             size="lg" 
             onClick={handleSubmit}
-            disabled={isSubmitting || !accessKey}
+            disabled={isSubmitting}
             className="bg-gradient-to-r from-bank-navy to-bank-blue hover:from-bank-blue hover:to-bank-navy text-white font-semibold text-lg px-16 py-4 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50"
           >
             {isSubmitting ? (
@@ -456,16 +441,7 @@ Email для связи: garantiya25@mail.ru
           <p className="text-sm text-bank-slate mt-4">
             📧 Заявка будет отправлена на <strong>garantiya25@mail.ru</strong>
           </p>
-          {accessKey && accessKey !== 'ba42c3d9-0cfe-43b4-816a-cbe491f04fca' && (
-            <p className="text-sm text-red-600 mt-2">
-              ❌ Неверный ключ доступа
-            </p>
-          )}
-          {accessKey === 'ba42c3d9-0cfe-43b4-816a-cbe491f04fca' && (
-            <p className="text-sm text-green-600 mt-2">
-              ✅ Ключ доступа действителен
-            </p>
-          )}
+
         </div>
 
         {/* Stats Section */}
@@ -513,36 +489,17 @@ Email для связи: garantiya25@mail.ru
                   </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-gradient-to-r from-bank-navy to-bank-blue p-6 rounded-2xl shadow-xl">
+                <div className="flex justify-center">
+                  <div className="bg-gradient-to-r from-bank-navy to-bank-blue p-8 rounded-2xl shadow-xl max-w-md w-full">
                     <div className="text-center">
-                      <Icon name="AtSign" size={24} className="text-white mx-auto mb-3" />
+                      <Icon name="AtSign" size={32} className="text-white mx-auto mb-4" />
                       <div className="text-sm text-white/80 mb-2">Email</div>
                       <a 
                         href="mailto:garantiya25@mail.ru" 
-                        className="text-xl font-bold text-white hover:text-yellow-300 transition-colors duration-300 break-all"
+                        className="text-2xl font-bold text-white hover:text-yellow-300 transition-colors duration-300 break-all"
                       >
                         garantiya25@mail.ru
                       </a>
-                    </div>
-                  </div>
-
-                  <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-2xl shadow-xl">
-                    <div className="text-center">
-                      <Icon name="MessageCircle" size={24} className="text-white mx-auto mb-3" />
-                      <div className="text-sm text-white/80 mb-2">Telegram консультант</div>
-                      <a 
-                        href="https://t.me/IT_business_service_selle" 
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xl font-bold text-white hover:text-yellow-300 transition-colors duration-300"
-                      >
-                        @IT_business_service_selle
-                      </a>
-                      <div className="flex items-center justify-center gap-1 mt-2">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <span className="text-xs text-white/80">Онлайн</span>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -565,44 +522,7 @@ Email для связи: garantiya25@mail.ru
                   </div>
                 </div>
 
-                {/* File Upload Instructions */}
-                <div className="mt-8 p-6 bg-yellow-50 border-2 border-yellow-200 rounded-xl">
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <Icon name="FileText" size={24} className="text-yellow-600" />
-                    <h4 className="text-lg font-bold text-yellow-800">
-                      Как отправить документы
-                    </h4>
-                  </div>
-                  <div className="text-sm text-yellow-800 space-y-2">
-                    <p className="font-semibold">📎 Файлы документов отправляйте одним из способов:</p>
-                    <div className="grid md:grid-cols-3 gap-4 mt-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Icon name="Mail" size={16} className="text-yellow-600" />
-                          <span className="font-semibold">Email:</span>
-                        </div>
-                        <p>Прикрепите файлы к письму на garantiya25@mail.ru</p>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Icon name="MessageCircle" size={16} className="text-yellow-600" />
-                          <span className="font-semibold">Telegram:</span>
-                        </div>
-                        <p>Отправьте документы консультанту @IT_business_service_selle</p>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Icon name="Cloud" size={16} className="text-yellow-600" />
-                          <span className="font-semibold">Облако:</span>
-                        </div>
-                        <p>Загрузите в облако и отправьте ссылку</p>
-                      </div>
-                    </div>
-                    <p className="text-xs mt-4 text-yellow-700">
-                      ⚠️ Автоматическая отправка файлов через браузер невозможна по соображениям безопасности
-                    </p>
-                  </div>
-                </div>
+
               </div>
             </CardContent>
           </Card>
