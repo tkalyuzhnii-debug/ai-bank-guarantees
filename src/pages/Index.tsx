@@ -229,24 +229,53 @@ Email для связи: garantiya25@mail.ru
             </div>
           </div>
           <div className="text-center">
-            <div className="text-center">
-              <p className="text-lg text-gray-800 max-w-3xl mx-auto mb-6">
-                Сайт создан в целях автоматизации выпуска банковской гарантии, для того чтобы уйти от телефонных переговоров, 
-                а сразу же приступить к оформлению банковской гарантии.
-              </p>
-              <div className="bg-blue-50 p-6 rounded-lg max-w-2xl mx-auto">
-                <div className="flex items-start gap-3">
-                  <Icon name="Mail" size={24} className="text-blue-600 mt-1 flex-shrink-0" />
-                  <div className="text-left">
-                    <p className="font-semibold text-gray-900 mb-2">Процесс работы:</p>
-                    <p className="text-gray-700">
-                      Все ссылки на подписания будут приходить к вам на почту. В случае дополнительных документов наш менеджер 
-                      с вами свяжется по почте или в удобном для вас мессенджере.
-                    </p>
+            <div className="max-w-4xl mx-auto">
+              {/* Основное описание */}
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl mb-8 border border-blue-100">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">О нашем сервисе</h2>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  Сайт создан в целях <span className="font-semibold text-blue-700">автоматизации выпуска банковской гарантии</span>, 
+                  для того чтобы уйти от телефонных переговоров, а сразу же приступить к оформлению банковской гарантии.
+                </p>
+              </div>
+
+              {/* Процесс работы */}
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-8">
+                <div className="flex items-center justify-center mb-6">
+                  <div className="bg-blue-600 p-3 rounded-full">
+                    <Icon name="Workflow" size={28} className="text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 ml-3">Процесс работы</h3>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-green-100 p-2 rounded-full flex-shrink-0">
+                      <Icon name="Mail" size={20} className="text-green-600" />
+                    </div>
+                    <div className="text-left">
+                      <h4 className="font-semibold text-gray-900 mb-2">Электронное подписание</h4>
+                      <p className="text-gray-600">
+                        Все ссылки на подписания будут приходить к вам на почту
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="bg-orange-100 p-2 rounded-full flex-shrink-0">
+                      <Icon name="MessageCircle" size={20} className="text-orange-600" />
+                    </div>
+                    <div className="text-left">
+                      <h4 className="font-semibold text-gray-900 mb-2">Дополнительные документы</h4>
+                      <p className="text-gray-600">
+                        Наш менеджер свяжется с вами по почте или в удобном мессенджере
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </header>
