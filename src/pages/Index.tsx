@@ -276,7 +276,6 @@ Email для связи: garantiya25@mail.ru
               </div>
             </div>
           </div>
-          </div>
         </div>
       </header>
 
